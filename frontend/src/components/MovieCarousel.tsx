@@ -1,4 +1,4 @@
-import MovieCard from "./movieCard";
+import MovieCard from "./MovieCard"
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
 

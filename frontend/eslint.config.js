@@ -19,5 +19,10 @@ export default tseslint.config([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      "import/no-unresolved": "error",
+      "import/no-named-as-default-member": "off",
+      "import/no-case-sensitive": "error"
+    }
   },
 ])
