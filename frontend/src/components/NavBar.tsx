@@ -1,8 +1,13 @@
-// components/Navbar.tsx
 import { useState } from "react";
-import { Menu, X, Search, User, ListVideo, LogIn } from "lucide-react";
+import { Menu, X, Search, User, ListVideo, LogIn, Sun, Moon } from "lucide-react";
 
-export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
+interface NavbarProps {
+  isLoggedIn: boolean;
+  isDark: boolean;
+  toggleDarkMode: () => void;
+}
+
+export default function Navbar({ isLoggedIn, isDark, toggleDarkMode }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -22,9 +27,12 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
 
       {/* Right Buttons (desktop) */}
       <div className="hidden md:flex items-center gap-6">
+        {/* Watchlist */}
         <button className="flex items-center gap-1 hover:text-zinc-300">
           <ListVideo className="w-5 h-5" /> Watchlist
         </button>
+
+        {/* Login/Profile */}
         {isLoggedIn ? (
           <button className="flex items-center gap-1 hover:text-zinc-300">
             <User className="w-5 h-5" /> Perfil
@@ -34,12 +42,24 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
             <LogIn className="w-5 h-5" /> Sign In
           </button>
         )}
+
+        {/* Toggle Dark Mode */}
+        <button
+          onClick={toggleDarkMode}
+          className="flex items-center gap-1 px-3 py-1 bg-neonBlue text-white rounded hover:bg-neonGreen transition"
+          aria-label="Toggle Dark Mode"
+          title="Toggle Dark Mode"
+        >
+          {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          {isDark ? " Claro" : " Oscuro"}
+        </button>
       </div>
 
       {/* Mobile Menu Button */}
       <button
         onClick={() => setMenuOpen(!menuOpen)}
         className="md:hidden z-20"
+        aria-label="Toggle menu"
       >
         {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
@@ -73,6 +93,20 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
                 <LogIn className="w-5 h-5" /> Sign In
               </button>
             )}
+          </li>
+          {/* Toggle Dark Mode - móvil */}
+          <li>
+            <button
+              onClick={() => {
+                toggleDarkMode();
+                setMenuOpen(false); // cierra menú al cambiar modo
+              }}
+              className="flex items-center gap-2 px-3 py-2 bg-neonBlue text-black rounded hover:bg-neonGreen transition w-full"
+              aria-label="Toggle Dark Mode"
+            >
+              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {isDark ? " Claro" : " Oscuro"}
+            </button>
           </li>
         </ul>
       </div>
