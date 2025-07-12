@@ -101,7 +101,7 @@ export default function Navbar({ isLoggedIn, isDark, toggleDarkMode }: NavbarPro
                 toggleDarkMode();
                 setMenuOpen(false); // cierra menú al cambiar modo
               }}
-              className="flex items-center gap-2 px-3 py-2 bg-neonBlue text-black rounded hover:bg-neonGreen transition w-full"
+              className="flex items-center gap-2"
               aria-label="Toggle Dark Mode"
             >
               {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
