@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Menu, X, Search, User, ListVideo, LogIn, Sun, Moon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface NavbarProps {
   isLoggedIn: boolean;
@@ -13,7 +14,9 @@ export default function Navbar({ isLoggedIn, isDark, toggleDarkMode }: NavbarPro
   return (
     <nav className="bg-zinc-900 text-white px-6 py-4 flex items-center justify-between relative">
       {/* Logo */}
-      <div className="text-2xl font-bold">MovieIA</div>
+      <Link to="/" className="text-2xl font-bold hover:text-zinc-300 transition-colors">
+        MovieIA
+      </Link>
 
       {/* Search Bar */}
       <div className="hidden md:flex items-center gap-2 w-1/2">
