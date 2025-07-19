@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import MovieCard from '@/components/MovieCard';
+import { LoadMovies } from '@/components/LoadMovies';
+import { fetchNowPlayingMovies } from '@/services/tmdb';
 
 const API_KEY = import.meta.env.VITE_API_KEY ?? ''; // Reemplaza aquí tu key
 
@@ -55,40 +55,23 @@ export function NowPlayingPage() {
 
 
   return (
-    <div className="min-h-screen bg-darkBg text-white p-8">
+    <div className="min-h-screen bg-darkBg text-white p-8 max-w-[1325px] mx-auto">
       <h1 className="text-4xl font-bold mb-6 drop-shadow-[0_0_6px_#00ffff]">
         🎬 Películas en cartelera
       </h1>
 
-      <InfiniteScroll
-        dataLength={movies.length}
-        next={fetchMoreMovies}
+      <LoadMovies
+        movies={movies.map(movie => ({
+          ...movie,
+          poster_path: movie.poster_path ?? ''
+        }))}
+        handleAddToWatchlist={handleAddToWatchlist}
+        fetchMoreMovies={fetchMoreMovies}
         hasMore={hasMore}
-        loader={<p className="text-center py-4">Cargando más películas...</p>}
-      >
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-          {movies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              title={movie.title}
-              imageUrl={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
-                  : "/no-image.png"
-              }
-              rating={movie.vote_average}
-              onAddToWatchlist={() => handleAddToWatchlist(movie.id)}
-            />
-          ))}
-        </div>
-      </InfiniteScroll>
+      />
+
     </div>
   );
 }
 
-async function fetchNowPlayingMovies(page: number, apiKey: string) {
-  const url = `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}&api_key=${apiKey}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('Failed to fetch movies');
-  return res.json();
-}
+
