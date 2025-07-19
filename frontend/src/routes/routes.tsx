@@ -1,13 +1,22 @@
 import { Routes, Route } from 'react-router-dom';
 import { Home } from '@/pages/home';
+import { ScrollToTop } from '@/components/ScrollTop'
 import { NowPlayingPage } from '@/pages/NowPlaying';
+import { ProximamentePage } from '@/pages/Proximamente';
+import { PopularPage } from '@/pages/Popular';
+import { TopRatedPage } from '@/pages/TopRaiting';  
 
 export default function RouterPage() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/category/now-playing" element={<NowPlayingPage />} />
-      {/* Aquí puedes agregar más rutas según sea necesario */}
-    </Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/category/now-playing" element={<NowPlayingPage />} />
+        <Route path="/category/upcoming" element={<ProximamentePage />} />
+        <Route path="/category/popular" element={<PopularPage />} />
+        <Route path="/category/top-rated" element={<TopRatedPage />} />
+      </Routes>
+    </>
   );
 }
