@@ -28,6 +28,7 @@ export function LoadMovies({ movies, handleAddToWatchlist, fetchMoreMovies, hasM
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
           {movies.map((movie) => (
             <MovieCard
+              id={movie.id.toString()}
               key={movie.id}
               title={movie.title}
               imageUrl={
