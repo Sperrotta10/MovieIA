@@ -33,3 +33,12 @@ export async function fetchMovieDetails(id: string, apiKey: string) {
   if (!res.ok) throw new Error('Failed to fetch movie details');
   return res.json();
 }
+
+// services/tmdb.ts
+export async function fetchSearchMovies(query: string, apiKey: string, page: number = 1) {
+  if (!query) return [];
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(query)}&page=${page}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Failed to search movies");
+  return res.json(); // Retorna: { results: [], page: x, total_pages: y }
+}
