@@ -26,3 +26,10 @@ export async function fetchUpcomingMovies(page: number, apiKey: string) {
   if (!res.ok) throw new Error('Failed to fetch upcoming movies');
   return res.json();
 }
+
+export async function fetchMovieDetails(id: string, apiKey: string) {
+  const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Failed to fetch movie details');
+  return res.json();
+}
