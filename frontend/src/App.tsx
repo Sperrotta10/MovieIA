@@ -1,19 +1,19 @@
-import { Home } from "./pages/home"
+import RouterPage from "./routes/routes";
 import Navbar from "./components/NavBar"
 import { useDarkMode } from "./hooks/ModeOscuro"
+import { BrowserRouter as Router } from "react-router-dom";
 
 function App() {
   const [isDark, setIsDark] = useDarkMode();
 
   return (
-    <>
-      <Navbar
+    <Router>
+      <Navbar 
         isLoggedIn={false}
         isDark={isDark}
-        toggleDarkMode={() => setIsDark(!isDark)}
-      />
-      <Home />
-    </>
+        toggleDarkMode={() => setIsDark(!isDark)} />
+      <RouterPage />
+    </Router>
   )
 }
 
