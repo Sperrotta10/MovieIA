@@ -6,6 +6,7 @@ import { ProximamentePage } from '@/pages/Proximamente';
 import { PopularPage } from '@/pages/Popular';
 import { TopRatedPage } from '@/pages/TopRaiting';  
 import MovieDetails from '@/components/MovieDetails'
+import { SearchResults } from '@/pages/SearchResults';
 
 export default function RouterPage() {
   return (
@@ -18,6 +19,7 @@ export default function RouterPage() {
         <Route path="/category/popular" element={<PopularPage />} />
         <Route path="/category/top-rated" element={<TopRatedPage />} />
         <Route path="/movies/:id" element={<MovieDetails />} />
+        <Route path="/search" element={<SearchResults />} />
       </Routes>
     </>
   );
