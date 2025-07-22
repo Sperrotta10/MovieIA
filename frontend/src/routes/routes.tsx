@@ -5,6 +5,7 @@ import { NowPlayingPage } from '@/pages/NowPlaying';
 import { ProximamentePage } from '@/pages/Proximamente';
 import { PopularPage } from '@/pages/Popular';
 import { TopRatedPage } from '@/pages/TopRaiting';  
+import MovieDetails from '@/components/MovieDetails'
 
 export default function RouterPage() {
   return (
@@ -16,6 +17,7 @@ export default function RouterPage() {
         <Route path="/category/upcoming" element={<ProximamentePage />} />
         <Route path="/category/popular" element={<PopularPage />} />
         <Route path="/category/top-rated" element={<TopRatedPage />} />
+        <Route path="/movies/:id" element={<MovieDetails />} />
       </Routes>
     </>
   );
