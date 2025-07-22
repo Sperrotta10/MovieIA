@@ -18,7 +18,7 @@ type MovieDetail = {
   genres?: { id: number; name: string }[]; // Géneros opcionales
 };
 
-export default function MovieDetails() {
+export function MovieDetails() {
   const { id } = useParams<{ id: string }>();
   const [movie, setMovie] = useState<MovieDetail | null>(null);
   const [loading, setLoading] = useState(true);

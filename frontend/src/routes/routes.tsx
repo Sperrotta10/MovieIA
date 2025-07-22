@@ -5,7 +5,7 @@ import { NowPlayingPage } from '@/pages/NowPlaying';
 import { ProximamentePage } from '@/pages/Proximamente';
 import { PopularPage } from '@/pages/Popular';
 import { TopRatedPage } from '@/pages/TopRaiting';  
-import MovieDetails from '@/components/MovieDetails'
+import { MovieDetails } from '@/pages/MovieDetails'
 import { SearchResults } from '@/pages/SearchResults';
 
 export default function RouterPage() {
