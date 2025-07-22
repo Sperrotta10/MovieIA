@@ -34,7 +34,7 @@ export default function MovieCarousel({ movies, onAddToWatchlist }: MovieCarouse
     <div className="relative w-full max-w-[1325px] mx-auto px-4">
       {/* Flecha Izquierda */}
       <button
-        className="absolute left-5 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/60 text-white rounded-full hover:bg-black/80"
+        className="hidden md:flex absolute left-5 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/60 text-white rounded-full hover:bg-black/80"
         onClick={() => scroll("left")}
       >
         <ChevronLeft className="w-5 h-5" />
@@ -48,6 +48,7 @@ export default function MovieCarousel({ movies, onAddToWatchlist }: MovieCarouse
         {firtsTenMovies.map((movie) => (
           <div key={movie.id} className="shrink-0">
             <MovieCard
+              id={movie.id.toString()}
               title={movie.title}
               imageUrl={movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : "/no-image.png"}
               rating={movie.vote_average ?? 0}
@@ -59,7 +60,7 @@ export default function MovieCarousel({ movies, onAddToWatchlist }: MovieCarouse
 
       {/* Flecha Derecha */}
       <button
-        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/60 text-white rounded-full hover:bg-black/80"
+        className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/60 text-white rounded-full hover:bg-black/80"
         onClick={() => scroll("right")}
       >
         <ChevronRight className="w-5 h-5" />

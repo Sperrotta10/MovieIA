@@ -5,20 +5,26 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react"; // Ícono de estrella
+import { useNavigate } from "react-router-dom";
 
 function MovieCard({
+  id,
   title,
   imageUrl,
   rating,
   onAddToWatchlist,
 }: {
+  id: string;
   title: string;
   imageUrl: string;
   rating: number;
   onAddToWatchlist: () => void;
 }) {
+
+  const navigate = useNavigate();
+
   return (
-    <Card className="w-[200px] h-[500px] flex flex-col justify-between rounded-2xl overflow-hidden shadow-md transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg bg-white dark:bg-zinc-900">
+    <Card onClick={() => navigate(`/movies/${id}`)} className="w-[200px] h-[500px] flex flex-col justify-between rounded-2xl overflow-hidden shadow-md transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg bg-white dark:bg-zinc-900">
       <img
         src={imageUrl}
         alt={title}
