@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import debounce from "debounce";
 import { fetchSearchMovies } from "@/services/tmdb";
 
+// Asegúrate de que esta función esté definida en tu servicio
 const API_KEY = import.meta.env.VITE_API_KEY ?? '';
 
 interface NavbarProps {
