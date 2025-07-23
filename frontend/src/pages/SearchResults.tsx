@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
+import MovieCard from "../components/MovieCard";
 import MovieCardHorizontal from "../components/MovieCardHorizontal";
 import { fetchSearchMovies } from "@/services/tmdb";
+import { useIsMobile } from '@/hooks/IsMovil';
 
 const API_KEY = import.meta.env.VITE_API_KEY ?? "";
 
@@ -18,6 +20,7 @@ export const SearchResults = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
+  const isMobile = useIsMobile();
   const location = useLocation();
   const query = new URLSearchParams(location.search).get("query");
 
@@ -81,20 +84,24 @@ export const SearchResults = () => {
         scrollableTarget="scrollableDiv"
       >
         <div className="flex flex-col gap-4">
-          {results.map((movie) => (
-            <MovieCardHorizontal
-              key={movie.id.toString()}
-              id={movie.id.toString()}
-              title={movie.title}
-              imageUrl={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
-                  : "/no-image.png"
-              }
-              rating={movie.vote_average ?? 0}
-              onAddToWatchlist={() => onAddToWatchlist(movie.id)}
-            />
-          ))}
+          {results.map((movie) => {
+            const commonProps = {
+              id: movie.id.toString(),
+              title: movie.title,
+              imageUrl: movie.poster_path
+                ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
+                : "/no-image.png",
+              rating: movie.vote_average ?? 0,
+              onAddToWatchlist: () => onAddToWatchlist(movie.id),
+            };
+
+            return isMobile ? (
+              <MovieCard key={movie.id.toString()} {...commonProps} horizontal={isMobile} />
+            ) : (
+              <MovieCardHorizontal key={movie.id.toString()} {...commonProps} />
+            );
+          })}
+
         </div>
       </InfiniteScroll>
     </div>
