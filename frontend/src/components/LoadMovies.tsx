@@ -1,5 +1,6 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MovieCard from '@/components/MovieCard';
+import { useIsMobile } from '@/hooks/IsMovil';
 
 
 interface LoadMoviesProps {
@@ -16,31 +17,32 @@ interface LoadMoviesProps {
 
 
 export function LoadMovies({ movies, handleAddToWatchlist, fetchMoreMovies, hasMore }: LoadMoviesProps) {
+  const isMobile = useIsMobile();
 
-
-    return (
-        <InfiniteScroll
-        dataLength={movies.length}
-        next={fetchMoreMovies ?? (() => {})}
-        hasMore={hasMore}
-        loader={<p className="text-center py-4">Cargando más películas...</p>}
-      >
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-          {movies.map((movie) => (
-            <MovieCard
-              id={movie.id.toString()}
-              key={movie.id}
-              title={movie.title}
-              imageUrl={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
-                  : "/no-image.png"
-              }
-              rating={movie.vote_average}
-              onAddToWatchlist={() => handleAddToWatchlist(movie.id)}
-            />
-          ))}
-        </div>
-      </InfiniteScroll>
-    )
+  return (
+    <InfiniteScroll
+      dataLength={movies.length}
+      next={fetchMoreMovies ?? (() => {})}
+      hasMore={hasMore}
+      loader={<p className="text-center py-4">Cargando más películas...</p>}
+    >
+      <div className={`grid gap-6 ${isMobile ? 'grid-cols-1 place-items-center' : 'grid-cols-2 md:grid-cols-4 lg:grid-cols-5'}`}>
+        {movies.map((movie) => (
+          <MovieCard
+            key={movie.id}
+            id={movie.id.toString()}
+            title={movie.title}
+            imageUrl={
+              movie.poster_path
+                ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
+                : "/no-image.png"
+            }
+            rating={movie.vote_average}
+            onAddToWatchlist={() => handleAddToWatchlist(movie.id)}
+            horizontal={isMobile}
+          />
+        ))}
+      </div>
+    </InfiniteScroll>
+  );
 }
