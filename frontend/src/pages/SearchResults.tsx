@@ -5,6 +5,7 @@ import MovieCard from "../components/MovieCard";
 import MovieCardHorizontal from "../components/MovieCardHorizontal";
 import { fetchSearchMovies } from "@/services/tmdb";
 import { useIsMobile } from '@/hooks/IsMovil';
+import { useScrollRestoration } from '@/hooks/useScrollRestoration';
 
 const API_KEY = import.meta.env.VITE_API_KEY ?? "";
 
@@ -19,6 +20,7 @@ export const SearchResults = () => {
   const [results, setResults] = useState<Movie[]>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  useScrollRestoration();
 
   const isMobile = useIsMobile();
   const location = useLocation();

@@ -1,7 +1,7 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MovieCard from '@/components/MovieCard';
 import { useIsMobile } from '@/hooks/IsMovil';
-
+import { useScrollRestoration } from '@/hooks/useScrollRestoration'
 
 interface LoadMoviesProps {
     movies: {
@@ -18,6 +18,7 @@ interface LoadMoviesProps {
 
 export function LoadMovies({ movies, handleAddToWatchlist, fetchMoreMovies, hasMore }: LoadMoviesProps) {
   const isMobile = useIsMobile();
+  useScrollRestoration();
 
   return (
     <InfiniteScroll
