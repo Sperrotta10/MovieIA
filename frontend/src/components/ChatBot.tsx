@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Send } from "lucide-react";
+import { Send, LucideBotMessageSquare, UserCircle2Icon } from "lucide-react";
 import clsx from "clsx";
 
 interface Message {
@@ -70,11 +70,16 @@ export function ChatBot() {
         {messages.map((msg, idx) => (
           <div
             key={idx}
-            className={clsx("flex", {
+            className={clsx("flex items-end", {
               "justify-end": msg.sender === "user",
               "justify-start": msg.sender === "ai",
             })}
           >
+            {msg.sender === "ai" && (
+              <span className="mr-2 flex items-center justify-center">
+                <LucideBotMessageSquare className="w-7 h-7 text-muted-foreground" />
+              </span>
+            )}
             <div
               className={clsx(
                 "rounded-xl p-3 max-w-[80%] text-sm whitespace-pre-wrap",
@@ -106,6 +111,11 @@ export function ChatBot() {
                 </div>
               )}
             </div>
+            {msg.sender === "user" && (
+              <span className="ml-2 flex items-center justify-center">
+                <UserCircle2Icon className="w-7 h-7 text-primary" />
+              </span>
+            )}
           </div>
         ))}
         <div ref={bottomRef} />
