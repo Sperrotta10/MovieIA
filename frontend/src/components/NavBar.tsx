@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Search, User, ListVideo, LogIn, Sun, Moon } from "lucide-react";
+import { Menu, X, Search, User, ListVideo, LogIn, Sun, Moon, LucideBotMessageSquare } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import debounce from "debounce";
 import { fetchSearchMovies } from "@/services/tmdb";
@@ -122,6 +122,11 @@ export default function Navbar({ isLoggedIn, isDark, toggleDarkMode }: NavbarPro
 
       {/* Botones right desktop */}
       <div className="hidden md:flex items-center gap-6">
+
+        <button onClick={() => navigate("/chat")} className="flex items-center gap-1 hover:text-zinc-300">
+          <LucideBotMessageSquare className="w-5 h-5" /> Chat
+        </button>
+
         <button className="flex items-center gap-1 hover:text-zinc-300">
           <ListVideo className="w-5 h-5" /> Watchlist
         </button>
@@ -162,7 +167,7 @@ export default function Navbar({ isLoggedIn, isDark, toggleDarkMode }: NavbarPro
           menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="mb-6">
+        <div className="mb-7 mt-6">
           <input
             type="text"
             placeholder="Buscar películas..."
@@ -181,6 +186,11 @@ export default function Navbar({ isLoggedIn, isDark, toggleDarkMode }: NavbarPro
           />
         </div>
         <ul className="space-y-4">
+          <li>
+            <button onClick={() => navigate("/chat")} className="flex items-center gap-2">
+              <LucideBotMessageSquare className="w-5 h-5" /> Chat
+            </button>
+          </li>
           <li>
             <button className="flex items-center gap-2">
               <ListVideo className="w-5 h-5" /> Watchlist

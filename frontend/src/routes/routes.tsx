@@ -7,6 +7,7 @@ import { PopularPage } from '@/pages/Popular';
 import { TopRatedPage } from '@/pages/TopRaiting';  
 import { MovieDetails } from '@/pages/MovieDetails'
 import { SearchResults } from '@/pages/SearchResults';
+import { Chat } from '@/pages/Chat';
 
 export default function RouterPage() {
   return (
@@ -20,6 +21,7 @@ export default function RouterPage() {
         <Route path="/category/top-rated" element={<TopRatedPage />} />
         <Route path="/movies/:id" element={<MovieDetails />} />
         <Route path="/search" element={<SearchResults />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </>
   );
