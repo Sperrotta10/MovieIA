@@ -19,9 +19,15 @@ interface MovieCardProps {
 export default function MovieCard({ id, title, imageUrl, rating, onAddToWatchlist, horizontal }: MovieCardProps) {
   const navigate = useNavigate();
 
+  function handleCardClick(e: React.MouseEvent) {
+    e.preventDefault();  // Previene navegación nativa si existiese
+    sessionStorage.setItem("scrollPosition", window.scrollY.toString());
+    navigate(`/movies/${id}`);
+  }
+
   if (horizontal) {
     return (
-      <Card onClick={() => navigate(`/movies/${id}`)} className="flex flex-row w-full h-[140px] rounded-xl overflow-hidden shadow-md bg-white dark:bg-zinc-900">
+      <Card onClick={(e) => handleCardClick(e)} className="flex flex-row w-full h-[140px] rounded-xl overflow-hidden shadow-md bg-white dark:bg-zinc-900">
         <img src={imageUrl} alt={title} className="w-[100px] h-full object-cover" />
 
         <div className="flex flex-col justify-between p-4 flex-1">
@@ -42,7 +48,7 @@ export default function MovieCard({ id, title, imageUrl, rating, onAddToWatchlis
 
   // vertical version (actual)
   return (
-    <Card onClick={() => navigate(`/movies/${id}`)} className="w-[200px] h-[500px] flex flex-col justify-between rounded-2xl overflow-hidden shadow-md transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg bg-white dark:bg-zinc-900">
+    <Card onClick={(e) => handleCardClick(e)} className="w-[200px] h-[500px] flex flex-col justify-between rounded-2xl overflow-hidden shadow-md transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg bg-white dark:bg-zinc-900">
       <img src={imageUrl} alt={title} className="w-full h-[320px] object-cover" />
 
       <CardContent className="p-4 space-y-2 text-center flex-1 flex flex-col justify-between">

@@ -22,9 +22,14 @@ function MovieCardHorizontal({
 }) {
   const navigate = useNavigate();
 
+  function handleCardClick() {
+    sessionStorage.setItem("scrollPosition", window.scrollY.toString());
+    navigate(`/movies/${id}`);
+  }
+
   return (
     <Card
-      onClick={() => navigate(`/movies/${id}`)}
+      onClick={handleCardClick}
       className="flex flex-col md:flex-row rounded-2xl overflow-hidden shadow-md transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg bg-white dark:bg-zinc-900"
     >
       <div
