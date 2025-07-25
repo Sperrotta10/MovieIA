@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { fetchNowPlayingMovies, fetchPopularMovies, fetchTopRatedMovies, fetchUpcomingMovies} from "@/services/tmdb";
 import { useState, useEffect } from "react";
+import { useScrollRestoration } from "@/hooks/useScrollRestoration";
 
 const API_KEY = import.meta.env.VITE_API_KEY ?? ''; // Reemplaza aquí tu key
 
@@ -14,6 +15,8 @@ type ApiMovie = {
 };
 
 export function Home() {
+
+    useScrollRestoration();
     
     const navigate = useNavigate();
     const [nowPlayingMovies, setNowPlayingMovies] = useState<ApiMovie[]>([]);

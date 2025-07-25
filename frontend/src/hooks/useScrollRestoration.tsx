@@ -15,7 +15,7 @@ export function useScrollRestoration() {
           sessionStorage.removeItem("scrollPosition");
         } else {
           // Esperar un poco más si aún no está todo el contenido cargado
-          setTimeout(scrollToSavedPosition, 100);
+          setTimeout(scrollToSavedPosition, 50);
         }
       };
 
