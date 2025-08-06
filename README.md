@@ -96,7 +96,7 @@ npm install
 3. Ejecutar el programa
 
 ```bash
-npm run deb
+npm run dev
 ```
 
 ---
