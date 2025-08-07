@@ -1,44 +1,53 @@
+import axios from 'axios';
+import { env } from '../config/enviroment';
+
+const API_URL = axios.create({ baseURL: env.VITE_URL_API_TMDB });
 
 export async function fetchNowPlayingMovies(page: number, apiKey: string) {
-  const url = `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}&api_key=${apiKey}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('Failed to fetch movies');
-  return res.json();
+  const res = await API_URL.get(`/movie/now_playing`, {
+    params: { language: 'en-US', page, api_key: apiKey }
+  });
+  if (res.status < 200 || res.status >= 300) throw new Error('Failed to fetch movies');
+  return res.data;
 }
 
 export async function fetchPopularMovies(page: number, apiKey: string) {
-  const url = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}&api_key=${apiKey}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('Failed to fetch popular movies');
-  return res.json();
+  const res = await API_URL.get(`/movie/popular`, {
+    params: { language: 'en-US', page, api_key: apiKey }
+  });
+  if (res.status < 200 || res.status >= 300) throw new Error('Failed to fetch popular movies');
+  return res.data;
 }
 
 export async function fetchTopRatedMovies(page: number, apiKey: string) {
-  const url = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}&api_key=${apiKey}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('Failed to fetch top rated movies');
-  return res.json();
+  const res = await API_URL.get(`/movie/top_rated`, {
+    params: { language: 'en-US', page, api_key: apiKey }
+  });
+  if (res.status < 200 || res.status >= 300) throw new Error('Failed to fetch top rated movies');
+  return res.data;
 }
 
 export async function fetchUpcomingMovies(page: number, apiKey: string) {
-  const url = `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${page}&api_key=${apiKey}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('Failed to fetch upcoming movies');
-  return res.json();
+  const res = await API_URL.get(`/movie/upcoming`, {
+    params: { language: 'en-US', page, api_key: apiKey }
+  });
+  if (res.status < 200 || res.status >= 300) throw new Error('Failed to fetch upcoming movies');
+  return res.data;
 }
 
 export async function fetchMovieDetails(id: string, apiKey: string) {
-  const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('Failed to fetch movie details');
-  return res.json();
+  const res = await API_URL.get(`/movie/${id}`, {
+    params: { api_key: apiKey, language: 'en-US' }
+  });
+  if (res.status < 200 || res.status >= 300) throw new Error('Failed to fetch movie details');
+  return res.data;
 }
 
-// services/tmdb.ts
 export async function fetchSearchMovies(query: string, apiKey: string, page: number = 1) {
   if (!query) return [];
-  const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(query)}&page=${page}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Failed to search movies");
-  return res.json(); // Retorna: { results: [], page: x, total_pages: y }
+  const res = await API_URL.get(`/search/movie`, {
+    params: { api_key: apiKey, query: encodeURIComponent(query), page }
+  });
+  if (res.status < 200 || res.status >= 300) throw new Error("Failed to search movies");
+  return res.data;
 }
