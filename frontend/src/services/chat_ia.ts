@@ -1,7 +1,7 @@
 import axios from "axios";
 import { env } from "../config/enviroment";
 
-const URL_BACKEND = env.PRODUCTION ? env.VITE_URL_BACKEND : env.VITE_URL_LOCAL_BACKEND;
+const URL_BACKEND = import.meta.env.PROD ? env.VITE_URL_BACKEND : env.VITE_URL_LOCAL_BACKEND;
 console.log('Using backend URL:', URL_BACKEND);
 const API_URL = axios.create({ baseURL: `${URL_BACKEND}/api/v1` });
 
