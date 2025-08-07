@@ -3,9 +3,10 @@ import { Menu, X, Search, User, ListVideo, LogIn, Sun, Moon, LucideBotMessageSqu
 import { Link, useNavigate } from "react-router-dom";
 import debounce from "debounce";
 import { fetchSearchMovies } from "@/services/tmdb";
+import { env } from "@/config/enviroment";
 
 // Asegúrate de que esta función esté definida en tu servicio
-const API_KEY = import.meta.env.VITE_API_KEY ?? '';
+const API_KEY = env.VITE_API_KEY ?? '';
 
 interface NavbarProps {
   isLoggedIn: boolean;

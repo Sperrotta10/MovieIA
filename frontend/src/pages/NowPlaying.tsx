@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { LoadMovies } from '@/components/LoadMovies';
 import { fetchNowPlayingMovies } from '@/services/tmdb';
+import { env } from '@/config/enviroment';
 
-const API_KEY = import.meta.env.VITE_API_KEY ?? ''; // Reemplaza aquí tu key
+const API_KEY = env.VITE_API_KEY ?? '';
 
 type Movie = {
   id: number;

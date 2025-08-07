@@ -6,8 +6,9 @@ import MovieCardHorizontal from "../components/MovieCardHorizontal";
 import { fetchSearchMovies } from "@/services/tmdb";
 import { useIsMobile } from '@/hooks/IsMovil';
 import { useScrollRestoration } from '@/hooks/useScrollRestoration';
+import { env } from "@/config/enviroment";
 
-const API_KEY = import.meta.env.VITE_API_KEY ?? "";
+const API_KEY = env.VITE_API_KEY ?? "";
 
 type Movie = {
   id: number;

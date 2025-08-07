@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { fetchNowPlayingMovies, fetchPopularMovies, fetchTopRatedMovies, fetchUpcomingMovies} from "@/services/tmdb";
 import { useState, useEffect } from "react";
 import { useScrollRestoration } from "@/hooks/useScrollRestoration";
+import { env } from "@/config/enviroment";
 
-const API_KEY = import.meta.env.VITE_API_KEY ?? ''; // Reemplaza aquí tu key
+const API_KEY = env.VITE_API_KEY ?? ''; // Reemplaza aquí tu key
 
 type ApiMovie = {
   id: number;

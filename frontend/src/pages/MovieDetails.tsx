@@ -1,8 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { fetchMovieDetails } from '@/services/tmdb'; // Asegúrate de que esta función esté definida en tu servicio
+import { fetchMovieDetails } from '@/services/tmdb';
+import { env } from '@/config/enviroment';
 
-const API_KEY = import.meta.env.VITE_API_KEY ?? ''; // Reemplaza aquí tu key
+const API_KEY = env.VITE_API_KEY ?? '';
 
 type MovieDetail = {
   id: number;
