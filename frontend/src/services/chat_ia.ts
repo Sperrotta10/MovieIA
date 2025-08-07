@@ -3,7 +3,7 @@ import { env } from "../config/enviroment";
 
 const URL_BACKEND = env.PRODUCTION ? env.VITE_URL_BACKEND : env.VITE_URL_LOCAL_BACKEND;
 console.log('Using backend URL:', URL_BACKEND);
-const API_URL = axios.create({ baseURL: URL_BACKEND });
+const API_URL = axios.create({ baseURL: `${URL_BACKEND}/api/v1` });
 
 export async function chatWithIA(message: string) {
   try {
