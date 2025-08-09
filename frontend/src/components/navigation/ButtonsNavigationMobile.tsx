@@ -24,6 +24,7 @@ export function ButtonsNavigationMobile({ isLoggedIn, isDark, toggleDarkMode, na
                 <ListVideo className="w-5 h-5" /> Watchlist
                 </button>
             </li>
+            {/*
             <li>
                 {isLoggedIn ? (
                 <button className="flex items-center gap-2">
@@ -35,6 +36,7 @@ export function ButtonsNavigationMobile({ isLoggedIn, isDark, toggleDarkMode, na
                 </button>
                 )}
             </li>
+            */}
             <li>
                 <button
                 onClick={() => {

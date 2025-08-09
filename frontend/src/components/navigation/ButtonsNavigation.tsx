@@ -23,6 +23,7 @@ export function ButtonsNavigation({ isLoggedIn, isDark, toggleDarkMode, navigate
             <p>Watchlist</p>
             </button>
 
+            {/*
             {isLoggedIn ? (
             <button className="flex items-center gap-1 hover:text-zinc-300">
                 <User className="w-5 h-5" /> 
@@ -34,6 +35,7 @@ export function ButtonsNavigation({ isLoggedIn, isDark, toggleDarkMode, navigate
                 <p>Sign In</p>
             </button>
             )}
+            */}
 
             <button
             onClick={toggleDarkMode}
