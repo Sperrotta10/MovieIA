@@ -4,10 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import debounce from "debounce";
 import { fetchSearchMovies } from "@/services/tmdb";
 import { env } from "@/config/enviroment";
-import { SearchBarDesktop } from "@/components/searchBar/SearchBarDesktop"
-import { SearchBarMobile } from "@/components/searchBar/SearchBarMobile";
-import { ButtonsNavigation } from "@/components/navigation/ButtonsNavigation";
-import { ButtonsNavigationMobile } from "@/components/navigation/ButtonsNavigationMobile";
+import { SearchBarDesktop } from "@/components/NavBar/searchBar/SearchBarDesktop"
+import { SearchBarMobile } from "@/components/NavBar/searchBar/SearchBarMobile";
+import { ButtonsNavigation } from "@/components/NavBar/navigation/ButtonsNavigation";
+import { ButtonsNavigationMobile } from "@/components/NavBar/navigation/ButtonsNavigationMobile";
 
 // Asegúrate de que esta función esté definida en tu servicio
 const API_KEY = env.VITE_API_KEY ?? '';

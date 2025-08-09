@@ -1,5 +1,5 @@
 import RouterPage from "./routes/routes";
-import Navbar from "./components/NavBar"
+import Navbar from "./components/NavBar/NavBar"
 import { useDarkMode } from "./hooks/ModeOscuro"
 
 function App() {
