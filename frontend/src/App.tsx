@@ -1,6 +1,7 @@
 import RouterPage from "./routes/routes";
 import Navbar from "./components/NavBar/NavBar"
 import { useDarkMode } from "./hooks/ModeOscuro"
+import { Toaster } from "@/components/ui/sonner";
 
 function App() {
   const [isDark, setIsDark] = useDarkMode();
@@ -12,6 +13,7 @@ function App() {
         isDark={isDark}
         toggleDarkMode={() => setIsDark(!isDark)} />
       <RouterPage />
+      <Toaster />
     </>
   )
 }
