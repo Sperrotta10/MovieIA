@@ -18,7 +18,7 @@ export function ButtonsNavigation({ isLoggedIn, isDark, toggleDarkMode, navigate
             <LucideBotMessageSquare className="w-5 h-5" /> Chat
             </button>
 
-            <button className="flex items-center gap-1 hover:text-zinc-300">
+            <button onClick={() => navigate("/watchlist")} className="flex items-center gap-1 hover:text-zinc-300">
             <ListVideo className="w-5 h-5" /> 
             <p>Watchlist</p>
             </button>

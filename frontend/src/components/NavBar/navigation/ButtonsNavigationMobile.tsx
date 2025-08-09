@@ -20,7 +20,7 @@ export function ButtonsNavigationMobile({ isLoggedIn, isDark, toggleDarkMode, na
                 </button>
             </li>
             <li>
-                <button className="flex items-center gap-2">
+                <button onClick={() => { navigate("/watchlist"); setMenuOpen(false); }} className="flex items-center gap-2">
                 <ListVideo className="w-5 h-5" /> Watchlist
                 </button>
             </li>
