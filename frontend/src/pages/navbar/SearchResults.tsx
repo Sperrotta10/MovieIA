@@ -21,6 +21,7 @@ export const SearchResults = () => {
   const [results, setResults] = useState<Movie[]>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [restored, setRestored] = useState(false);
   //useScrollRestoration();
 
   const isMobile = useIsMobile();
@@ -52,6 +53,21 @@ export const SearchResults = () => {
     }
   };
 
+  useEffect(() => {
+    const savedMoviesCount = Number(sessionStorage.getItem("moviesLoaded"));
+    const savedScroll = sessionStorage.getItem("scrollPosition");
+
+    if (!restored && savedMoviesCount && results.length < savedMoviesCount && hasMore) {
+      fetchMoreData();
+    } else if (!restored && savedScroll) {
+      requestAnimationFrame(() => {
+        window.scrollTo(0, Number(savedScroll));
+      });
+      sessionStorage.removeItem("scrollPosition");
+      sessionStorage.removeItem("moviesLoaded");
+      setRestored(true);
+    }
+  }, [results.length, hasMore, restored]);
 
   useEffect(() => {
     setResults([]);

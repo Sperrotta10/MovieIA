@@ -7,23 +7,22 @@ import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-function MovieCardHorizontal({
-  id,
-  title,
-  imageUrl,
-  rating,
-  onAddToWatchlist,
-}: {
+interface MovieCardHorizontalProps {
   id: string;
   title: string;
   imageUrl: string;
   rating: number;
   onAddToWatchlist: () => void;
-}) {
+  moviesCount: number; // Para manejar el scroll y restaurar la posición
+}
+
+function MovieCardHorizontal({ id, title, imageUrl, rating, onAddToWatchlist, moviesCount }: MovieCardHorizontalProps) {
+
   const navigate = useNavigate();
 
   function handleCardClick() {
     sessionStorage.setItem("scrollPosition", window.scrollY.toString());
+    sessionStorage.setItem("moviesLoaded", moviesCount.toString());
     navigate(`movies/${id}`);
   }
 
