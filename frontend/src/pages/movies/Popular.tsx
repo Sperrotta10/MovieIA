@@ -49,12 +49,6 @@ export function PopularPage() {
   }, []);
 
 
-  function handleAddToWatchlist(movieId: number) {
-    // Aquí puedes implementar la lógica para agregar a watchlist
-    alert(`Añadiste la película ${movieId} a la watchlist!`);
-  }
-
-
   return (
     <div className="min-h-screen bg-darkBg text-white p-8 max-w-[1325px] mx-auto">
       <h1 className="text-4xl font-bold mb-6 drop-shadow-[0_0_6px_#00ffff]">
@@ -66,7 +60,6 @@ export function PopularPage() {
           ...movie,
           poster_path: movie.poster_path ?? ''
         }))}
-        handleAddToWatchlist={handleAddToWatchlist}
         fetchMoreMovies={fetchMoreMovies}
         hasMore={hasMore}
       />

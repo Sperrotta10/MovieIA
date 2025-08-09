@@ -8,6 +8,7 @@ import { TopRatedPage } from '@/pages/movies/TopRaiting';
 import { MovieDetails } from '@/pages/MovieDetails'
 import { SearchResults } from '@/pages/navbar/SearchResults';
 import { Chat } from '@/pages/navbar/Chat';
+import { WatchlistPage } from "@/pages/navbar/WatchList"
 import { NotFound404 } from '@/pages/NotFound404';
 
 export default function RouterPage() {
@@ -38,11 +39,14 @@ export default function RouterPage() {
         </Route>
 
         <Route path="movies/:id" element={<MovieDetails />} />
+
         <Route path="/search">
           <Route index element={<SearchResults />} />
           <Route path="movies/:id" element={<MovieDetails />} />
         </Route>
+
         <Route path="/chat" element={<Chat />} />
+        <Route path="/watchlist" element={<WatchlistPage />} />
         <Route path="*" element={<NotFound404 />} />
       </Routes>
     </>

@@ -54,9 +54,9 @@ export function Home() {
     };
 
     return (
-        <div className="min-h-scree">
-
+        <div className="min-h-screen">
             <div className="container mx-auto px-4 py-8">
+
                 <div className="w-full max-w-[1325px] mx-auto px-4">
                     <div className="flex justify-between items-center ml-4 mr-4">
                         <h2 className="text-3xl font-bold text-left py-6 drop-shadow-[0_0_6px_#00ffff]">

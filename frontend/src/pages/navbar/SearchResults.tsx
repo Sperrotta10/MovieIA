@@ -82,10 +82,6 @@ export const SearchResults = () => {
     setPage(nextPage);
   };
 
-  function onAddToWatchlist(id: number): void {
-    console.log(`Añadir a la lista de seguimiento: ${id}`);
-  }
-
   return (
     <div className="px-4 md:px-12 py-6">
       <h1 className="text-2xl font-semibold text-white mb-4">
@@ -111,7 +107,6 @@ export const SearchResults = () => {
                 ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
                 : "/no-image.png",
               rating: movie.vote_average ?? 0,
-              onAddToWatchlist: () => onAddToWatchlist(movie.id),
               moviesCount: results.length,
             };
 

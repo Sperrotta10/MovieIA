@@ -11,13 +11,12 @@ interface LoadMoviesProps {
         poster_path: string;
         vote_average: number;
     }[];
-    handleAddToWatchlist: (movieId: number) => void;
     fetchMoreMovies: () => Promise<any>;
     hasMore: boolean;
 }
 
 
-export function LoadMovies({ movies, handleAddToWatchlist, fetchMoreMovies, hasMore }: LoadMoviesProps) {
+export function LoadMovies({ movies, fetchMoreMovies, hasMore }: LoadMoviesProps) {
   const isMobile = useIsMobile();
   const [restored, setRestored] = useState(false);
   
@@ -57,7 +56,6 @@ export function LoadMovies({ movies, handleAddToWatchlist, fetchMoreMovies, hasM
                 : "/no-image.png"
             }
             rating={movie.vote_average}
-            onAddToWatchlist={() => handleAddToWatchlist(movie.id)}
             horizontal={isMobile}
             moviesCount={movies.length}
           />
