@@ -84,7 +84,7 @@ export default function Navbar({ isLoggedIn, isDark, toggleDarkMode }: NavbarPro
             <li
               key={movie.id}
               onClick={() => {
-                navigate(`/movie/${movie.id}`);
+                navigate(`movies/${movie.id}`);
                 setSearchTerm("");
                 setSearchResults([]);
               }}
