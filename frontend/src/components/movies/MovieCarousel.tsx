@@ -11,10 +11,9 @@ type Movie = {
 
 interface MovieCarouselProps {
   movies: Movie[];
-  onAddToWatchlist?: (movieId: number) => void;
 }
 
-export default function MovieCarousel({ movies, onAddToWatchlist }: MovieCarouselProps) {
+export default function MovieCarousel({ movies }: MovieCarouselProps) {
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -52,7 +51,6 @@ export default function MovieCarousel({ movies, onAddToWatchlist }: MovieCarouse
               title={movie.title}
               imageUrl={movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : "/no-image.png"}
               rating={movie.vote_average ?? 0}
-              onAddToWatchlist={() => onAddToWatchlist?.(movie.id)}
               moviesCount={firtsTenMovies.length}
             />
           </div>
