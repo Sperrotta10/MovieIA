@@ -53,6 +53,11 @@ MovieIA es una aplicación web moderna que te permite descubrir y explorar pelí
     <td>Base de datos de películas (próximamente)</td>
     <td><a href="https://www.themoviedb.org/documentation/api">🔗</a></td>
   </tr>
+  <tr>
+    <td><img src="https://console.groq.com/groq-circle.png" width="20" alt="Groq"> Groq</td>
+    <td>asistente de inteligencia artificial</td>
+    <td><a href="https://groq.com/">🔗</a></td>
+  </tr>
 </table>
 
 ---
@@ -103,8 +108,8 @@ npm run dev
 
 ## 📌 Próximas mejoras
 
-- 🤖 Integración con IA (OpenAI o similar) para recomendaciones personalizadas
-- 🔐 Login de usuario + gestión de Watchlist
+- 🤖 Permitir que el chatBot puede recomendar series
+- 🔐 Login de usuario
 - 📱 Versión optimizada para dispositivos móviles
 
 ---
