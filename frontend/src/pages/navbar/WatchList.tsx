@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import MovieCard from "@/components/movies/MovieCard";
+import { useIsMobile } from "@/hooks/IsMovil"
+import { SideBar } from "@/components/NavBar/sidebar/SideBar"
+import { ButtonsMobile } from "@/components/NavBar/sidebar/ButtonsMobile";
 
 type Movie = {
   id: number;
@@ -17,21 +20,21 @@ export function WatchlistPage() {
         watched: [],
         favorites: [],
     });
+    const isMobile = useIsMobile();
 
-    // Cargar listas desde localStorage
     useEffect(() => {
-    const saved = localStorage.getItem("watchlistData");
-    if (saved) {
+        const saved = localStorage.getItem("watchlistData");
+        if (saved) {
         try {
-        setLists(JSON.parse(saved));
+            setLists(JSON.parse(saved));
         } catch {
-        setLists({
+            setLists({
             toWatch: [],
             watched: [],
             favorites: [],
-        });
+            });
         }
-    }
+        }
     }, []);
 
     const removeFromList = (section: Section, id: number) => {
@@ -39,6 +42,11 @@ export function WatchlistPage() {
         ...prev,
         [section]: prev[section].filter((movie) => movie.id !== id),
         }));
+        localStorage.setItem("watchlistData", JSON.stringify({
+            ...lists,
+            [section]: lists[section].filter((movie) => movie.id !== id),
+        }));
+        
     };
 
     const moveToList = (from: Section, to: Section, movie: Movie) => {
@@ -47,95 +55,88 @@ export function WatchlistPage() {
         [from]: prev[from].filter((m) => m.id !== movie.id),
         [to]: [...prev[to], movie],
         }));
+        localStorage.setItem("watchlistData", JSON.stringify({
+            ...lists,
+            [from]: lists[from].filter((m) => m.id !== movie.id),
+            [to]: [...lists[to], movie],
+        }));
+    };
+
+    const sections: Section[] = ["toWatch", "watched", "favorites"];
+    const labels = {
+        toWatch: "🎯 Quiero ver",
+        watched: "✅ Vistas",
+        favorites: "⭐ Favoritas",
     };
 
     return (
-        <div className="flex h-screen bg-zinc-900 text-white">
-        {/* Sidebar */}
-        <aside className="w-64 bg-zinc-800 p-6 flex flex-col gap-4">
-            <h2 className="text-xl font-bold mb-6">🎬 Mi Watchlist</h2>
-            <button
-            className={`text-left px-3 py-2 rounded-lg transition ${
-                activeSection === "toWatch" ? "bg-blue-600" : "hover:bg-zinc-700"
-            }`}
-            onClick={() => setActiveSection("toWatch")}
-            >
-            🎯 Quiero ver
-            </button>
-            <button
-            className={`text-left px-3 py-2 rounded-lg transition ${
-                activeSection === "watched" ? "bg-blue-600" : "hover:bg-zinc-700"
-            }`}
-            onClick={() => setActiveSection("watched")}
-            >
-            ✅ Vistas
-            </button>
-            <button
-            className={`text-left px-3 py-2 rounded-lg transition ${
-                activeSection === "favorites" ? "bg-blue-600" : "hover:bg-zinc-700"
-            }`}
-            onClick={() => setActiveSection("favorites")}
-            >
-            ⭐ Favoritas
-            </button>
-        </aside>
+        <div className="flex min-h-screen">
+            {/* Sidebar Desktop */}
+            <SideBar
+                sections={sections}
+                activeSection={activeSection}
+                setActiveSection={setActiveSection}
+            />
 
-        {/* Main content */}
-        <main className="flex-1 p-6 overflow-y-auto">
-            <h1 className="text-2xl font-semibold mb-4">
-            {activeSection === "toWatch" && "🎯 Películas que quiero ver"}
-            {activeSection === "watched" && "✅ Películas vistas"}
-            {activeSection === "favorites" && "⭐ Mis favoritas"}
-            </h1>
+            {/* Mobile top buttons */}
+            <ButtonsMobile
+                sections={sections}
+                activeSection={activeSection}
+                setActiveSection={setActiveSection}
+            />
 
-            {lists[activeSection].length === 0 ? (
-            <p className="text-zinc-400">No tienes películas en esta sección.</p>
-            ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                {lists[activeSection].map((movie) => (
-                <div key={movie.id} className="relative">
-                    <MovieCard
-                    id={movie.id.toString()}
-                    title={movie.title}
-                    imageUrl={movie.imageUrl}
-                    rating={movie.rating}
-                    moviesCount={lists[activeSection].length}
-                    />
+            {/* Main content */}
+            <main className="flex-1 p-6 pt-20 md:pt-6">
+                <h1 className="text-2xl font-semibold mb-4">
+                {labels[activeSection]}
+                </h1>
 
-                    {/* Acción contextual */}
-                    <div className="absolute top-2 right-2 flex flex-col gap-1">
-                    {activeSection !== "favorites" && (
+                {lists[activeSection].length === 0 ? (
+                <p className="text-zinc-400">No tienes películas en esta sección.</p>
+                ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                    {lists[activeSection].map((movie) => (
+                    <div key={movie.id} className="relative">
+                        <MovieCard
+                        id={movie.id.toString()}
+                        title={movie.title}
+                        imageUrl={movie.imageUrl}
+                        rating={movie.rating}
+                        horizontal={isMobile}
+                        moviesCount={lists[activeSection].length}
+                        />
+
+                        {/* Botones de acción */}
+                        <div className="absolute top-2 right-7 flex flex-row md:flex-col gap-2 md:gap-1">
+                        {activeSection !== "favorites" && (
+                            <button
+                            className="bg-yellow-500 p-1 md:px-2 md:py-1 rounded text-sm transition-transform hover:scale-110"
+                            onClick={() => moveToList(activeSection, "favorites", movie)}
+                            >
+                            ⭐
+                            </button>
+                        )}
+                        {activeSection !== "watched" && (
+                            <button
+                            className="bg-green-500 p-1 md:px-2 md:py-1 rounded text-sm transition-transform hover:scale-110"
+                            onClick={() => moveToList(activeSection, "watched", movie)}
+                            >
+                            ✅
+                            </button>
+                        )}
                         <button
-                        className="bg-yellow-500 px-2 py-1 rounded text-sm"
-                        onClick={() =>
-                            moveToList(activeSection, "favorites", movie)
-                        }
+                            className="bg-red-500 p-1 md:px-2 md:py-1 rounded text-sm transition-transform hover:scale-110"
+                            onClick={() => removeFromList(activeSection, movie.id)}
                         >
-                        ⭐
+                            🗑
                         </button>
-                    )}
-                    {activeSection !== "watched" && (
-                        <button
-                        className="bg-green-500 px-2 py-1 rounded text-sm"
-                        onClick={() =>
-                            moveToList(activeSection, "watched", movie)
-                        }
-                        >
-                        ✅
-                        </button>
-                    )}
-                    <button
-                        className="bg-red-500 px-2 py-1 rounded text-sm"
-                        onClick={() => removeFromList(activeSection, movie.id)}
-                    >
-                        🗑
-                    </button>
+                        </div>
                     </div>
+                    ))}
                 </div>
-                ))}
-            </div>
-            )}
-        </main>
+                )}
+            </main>
         </div>
     );
 }
+
