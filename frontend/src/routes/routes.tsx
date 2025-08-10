@@ -45,8 +45,12 @@ export default function RouterPage() {
           <Route path="movies/:id" element={<MovieDetails />} />
         </Route>
 
+        <Route path="/watchlist">
+          <Route index element={<WatchlistPage />} />
+          <Route path="movies/:id" element={<MovieDetails />} />
+        </Route>
+
         <Route path="/chat" element={<Chat />} />
-        <Route path="/watchlist" element={<WatchlistPage />} />
         <Route path="*" element={<NotFound404 />} />
       </Routes>
     </>
