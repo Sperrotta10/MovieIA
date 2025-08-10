@@ -12,7 +12,7 @@ export function SideBar({ sections, activeSection, setActiveSection }: SideBarPr
     };
 
     return (
-        <aside className="hidden md:flex w-64 h-screen bg-darkContraste p-6 flex-col gap-4 sticky top-0">
+        <aside className="hidden md:flex w-64 h-screen dark:bg-zinc-900 bg-zinc-100 p-6 flex-col gap-4 sticky top-0">
             <h2 className="text-xl font-bold mb-6">🎬 Mi Watchlist</h2>
             {sections.map((section) => (
                 <button

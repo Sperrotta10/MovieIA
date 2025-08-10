@@ -14,7 +14,7 @@ export function ButtonsMobile({ sections, activeSection, setActiveSection }: But
     };
 
     return(
-        <div className="md:hidden fixed left-0 right-0 bg-zinc-800 p-2 flex justify-around z-40 border-b border-zinc-700">
+        <div className="md:hidden fixed left-0 right-0 p-2 flex justify-around z-40 border-b border-zinc-700">
             {sections.map((section) => (
             <button
                 key={section}
