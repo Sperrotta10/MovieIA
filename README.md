@@ -50,7 +50,7 @@ MovieIA es una aplicación web moderna que te permite descubrir y explorar pelí
   </tr>
   <tr>
     <td><img src="https://www.themoviedb.org/favicon.ico" width="20" alt="TMDB"> TMDb API</td>
-    <td>Base de datos de películas (próximamente)</td>
+    <td>Base de datos de películas</td>
     <td><a href="https://www.themoviedb.org/documentation/api">🔗</a></td>
   </tr>
   <tr>
