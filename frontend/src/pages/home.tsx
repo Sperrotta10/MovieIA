@@ -92,7 +92,7 @@ export function Home() {
                 <div className="w-full max-w-[1325px] mx-auto px-4">
                     
                     <div className="flex justify-between items-center ml-4 mr-4">
-                        <h2 className="text-3xl font-bold text-left py-6 drop-shadow-[0_0_6px_#ff00ff]">
+                        <h2 className="text-3xl font-bold text-left py-6 drop-shadow-[0_0_6px_#ff0000]">
                         🎬 Películas Proximamente
                         </h2>
                         <Button className="" onClick={() => navigate('/category/upcoming')}>Ver Todas</Button>
