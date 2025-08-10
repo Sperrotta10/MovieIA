@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import ReactMarkdown from 'react-markdown';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Send, LucideBotMessageSquare, UserCircle2Icon } from "lucide-react";
 import clsx from "clsx";
 import { chatWithIA } from "@/services/chat_ia";
+import { MovieCardMsg } from "@/components/NavBar/movie/MovieCardMsg"
 
 interface Message {
   sender: "user" | "ai";
@@ -14,7 +14,8 @@ interface Message {
   movies?: {
     id: number;
     title: string;
-    poster_path: string;
+    overview: string;
+    imageUrl: string;
     rating: number;
   }[];
 }
@@ -41,7 +42,6 @@ export function ChatBot() {
     setMessages((prev) => [...prev, newMessage]);
     setInput("");
 
-    // Simular respuesta IA (esto luego se reemplaza con fetch)
     chatWithIA(input.trim()).then((response) => {
       setMessages((prev) => [
         ...prev,
@@ -50,6 +50,16 @@ export function ChatBot() {
           text: response.text,
           id: crypto.randomUUID(),
           movies: response.movies,
+        },
+      ]);
+    })
+    .catch(() => {
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "ai",
+          text: "Lo siento, tuve un problema para encontrar películas en este momento. 😔",
+          id: crypto.randomUUID(),
         },
       ]);
     });
@@ -90,19 +100,7 @@ export function ChatBot() {
                     {msg.movies && (
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-3">
                         {msg.movies.map((movie) => (
-                            <Card key={movie.id} className="p-0">
-                            <CardContent className="p-2">
-                                <img
-                                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                                alt={movie.title}
-                                className="rounded-lg w-full object-cover mb-2"
-                                />
-                                <p className="text-sm font-medium">{movie.title}</p>
-                                <p className="text-xs text-muted-foreground">
-                                ⭐ {movie.rating}
-                                </p>
-                            </CardContent>
-                            </Card>
+                            <MovieCardMsg key={movie.id} movie={movie} />
                         ))}
                         </div>
                     )}
