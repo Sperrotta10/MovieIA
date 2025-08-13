@@ -11,8 +11,8 @@ export class MetodosAuxiliares {
             id: m.id,
             title: m.title,
             overview: m.overview,
-            imageUrl: m.poster_path ? `https://image.tmdb.org/t/p/w500${m.poster_path}` : null,
-            rating: m.vote_average,
+            poster_path: m.poster_path ? `https://image.tmdb.org/t/p/w500${m.poster_path}` : null,
+            vote_average: m.vote_average,
         };
     }
 
