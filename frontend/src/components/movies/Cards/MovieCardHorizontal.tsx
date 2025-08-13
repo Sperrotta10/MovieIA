@@ -12,7 +12,7 @@ interface MovieCardHorizontalProps {
   moviesCount: number; // Para manejar el scroll y restaurar la posición
 }
 
-function MovieCardHorizontal({ id, title, imageUrl, rating, moviesCount }: MovieCardHorizontalProps) {
+export function MovieCardHorizontal({ id, title, imageUrl, rating, moviesCount }: MovieCardHorizontalProps) {
   
     const navigate = useNavigate();
 
@@ -92,5 +92,3 @@ function MovieCardHorizontal({ id, title, imageUrl, rating, moviesCount }: Movie
       </Card>
     );
 }
-
-export default MovieCardHorizontal;

@@ -5,7 +5,7 @@ import { NowPlayingPage } from '@/pages/movies/NowPlaying';
 import { ProximamentePage } from '@/pages/movies/Proximamente';
 import { PopularPage } from '@/pages/movies/Popular';
 import { TopRatedPage } from '@/pages/movies/TopRaiting';  
-import { MovieDetails } from '@/pages/MovieDetails'
+import { MovieDetails } from '@/pages/movies/Details/MovieDetails'
 import { SearchResults } from '@/pages/navbar/SearchResults';
 import { Chat } from '@/pages/navbar/Chat';
 import { WatchlistPage } from "@/pages/navbar/WatchList"

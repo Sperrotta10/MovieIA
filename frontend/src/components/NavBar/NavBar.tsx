@@ -18,7 +18,7 @@ interface NavbarProps {
   toggleDarkMode: () => void;
 }
 
-export default function Navbar({ isLoggedIn, isDark, toggleDarkMode }: NavbarProps) {
+export function Navbar({ isLoggedIn, isDark, toggleDarkMode }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Estados para búsqueda

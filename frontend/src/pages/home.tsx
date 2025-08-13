@@ -1,4 +1,4 @@
-import MovieCarousel from "@/components/movies/MovieCarousel";
+import { MovieCarousel } from "@/components/movies/Home/MovieCarousel";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { fetchNowPlayingMovies, fetchPopularMovies, fetchTopRatedMovies, fetchUpcomingMovies} from "@/services/tmdb";

@@ -1,4 +1,4 @@
-import MovieCard from "./MovieCard"
+import { MovieCard } from "@/components/movies/Cards/MovieCard"
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
 
@@ -13,7 +13,7 @@ interface MovieCarouselProps {
   movies: Movie[];
 }
 
-export default function MovieCarousel({ movies }: MovieCarouselProps) {
+export function MovieCarousel({ movies }: MovieCarouselProps) {
 
   const scrollRef = useRef<HTMLDivElement>(null);
 

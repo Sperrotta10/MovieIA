@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import MovieCard from '@/components/movies/MovieCard';
+import { MovieCard } from '@/components/movies/Cards/MovieCard';
 import { useIsMobile } from '@/hooks/IsMovil';
 //import { useScrollRestoration } from '@/hooks/useScrollRestoration'
 

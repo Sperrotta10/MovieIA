@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import MovieCard from "@/components/movies/MovieCard";
+import { MovieCard } from "@/components/movies/Cards/MovieCard";
 import { useIsMobile } from "@/hooks/IsMovil"
-import { SideBar } from "@/components/NavBar/sidebar/SideBar"
-import { ButtonsMobile } from "@/components/NavBar/sidebar/ButtonsMobile";
+import { SideBar } from "@/components/NavBar/WhatchList/sidebar/SideBar"
+import { ButtonsMobile } from "@/components/NavBar/WhatchList/sidebar/ButtonsMobile";
 
 type Movie = {
   id: number;

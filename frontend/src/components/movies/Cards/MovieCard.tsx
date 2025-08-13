@@ -13,7 +13,7 @@ interface MovieCardProps {
   moviesCount: number; // Para manejar el scroll y restaurar la posición
 }
 
-export default function MovieCard({ id, title, imageUrl, rating, horizontal, moviesCount }: MovieCardProps) {
+export function MovieCard({ id, title, imageUrl, rating, horizontal, moviesCount }: MovieCardProps) {
     const navigate = useNavigate();
 
     function handleCardClick(e: React.MouseEvent) {

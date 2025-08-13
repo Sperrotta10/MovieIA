@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
-import MovieCard from "@/components/movies/MovieCard";
-import MovieCardHorizontal from "@/components/movies/MovieCardHorizontal";
+import { MovieCard } from "@/components/movies/Cards/MovieCard";
+import { MovieCardHorizontal } from "@/components/movies/Cards/MovieCardHorizontal";
 import { fetchSearchMovies } from "@/services/tmdb";
 import { useIsMobile } from '@/hooks/IsMovil';
 //import { useScrollRestoration } from '@/hooks/useScrollRestoration';

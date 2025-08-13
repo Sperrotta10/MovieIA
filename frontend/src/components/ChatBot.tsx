@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Send, LucideBotMessageSquare, UserCircle2Icon } from "lucide-react";
 import clsx from "clsx";
 import { chatWithIA } from "@/services/chat_ia";
-import { MovieCardMsg } from "@/components/NavBar/movie/MovieCardMsg"
+import { MovieCardMsg } from "@/components/NavBar/Chat/movie/MovieCardMsg"
 
 interface Message {
   sender: "user" | "ai";
