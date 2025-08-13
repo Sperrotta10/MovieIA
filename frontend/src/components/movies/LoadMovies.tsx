@@ -50,12 +50,12 @@ export function LoadMovies({ movies, fetchMoreMovies, hasMore }: LoadMoviesProps
             key={movie.id}
             id={movie.id.toString()}
             title={movie.title}
-            imageUrl={
+            poster_path={
               movie.poster_path
                 ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
                 : "/no-image.png"
             }
-            rating={movie.vote_average}
+            vote_average={movie.vote_average}
             horizontal={isMobile}
             moviesCount={movies.length}
           />

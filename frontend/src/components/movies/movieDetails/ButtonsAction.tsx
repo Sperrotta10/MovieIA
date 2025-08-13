@@ -1,4 +1,5 @@
 import { Eye, Clock, Star } from "lucide-react";
+import type { MovieDetail } from "@/types/movie";
 
 interface ButtonsActionProps {
     movie: MovieDetail;
@@ -10,20 +11,6 @@ interface ButtonsActionProps {
     setFavorite: (value: boolean) => void;
     handleToggleMovie: (action: "toWatch" | "watched" | "favorites", movie: MovieDetail) => void;
 }
-
-type MovieDetail = {
-  id: number;
-  title: string;
-  overview: string;
-  poster_path: string;
-  backdrop_path: string;
-  vote_average: number;
-  release_date: string;
-  genre_ids: number[]; 
-  runtime: number;
-  vote_count: number;
-  genres?: { id: number; name: string }[]; // Géneros opcionales
-};
 
 export function ButtonsAction({ movie, seen, watchlist, favorite, setSeen, setWatchlist, setFavorite, handleToggleMovie }: ButtonsActionProps) {
 

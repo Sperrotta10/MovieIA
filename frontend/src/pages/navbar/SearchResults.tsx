@@ -7,15 +7,9 @@ import { fetchSearchMovies } from "@/services/tmdb";
 import { useIsMobile } from '@/hooks/IsMovil';
 //import { useScrollRestoration } from '@/hooks/useScrollRestoration';
 import { env } from "@/config/enviroment";
+import type { Movie } from "@/types/movie";
 
 const API_KEY = env.VITE_API_KEY ?? "";
-
-type Movie = {
-  id: number;
-  title: string;
-  poster_path: string;
-  vote_average: number;
-};
 
 export const SearchResults = () => {
   const [results, setResults] = useState<Movie[]>([]);
@@ -103,10 +97,10 @@ export const SearchResults = () => {
             const commonProps = {
               id: movie.id.toString(),
               title: movie.title,
-              imageUrl: movie.poster_path
+              poster_path: movie.poster_path
                 ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
                 : "/no-image.png",
-              rating: movie.vote_average ?? 0,
+              vote_average: movie.vote_average ?? 0,
               moviesCount: results.length,
             };
 

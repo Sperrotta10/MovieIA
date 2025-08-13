@@ -2,16 +2,9 @@ import { useState, useEffect } from 'react';
 import { LoadMovies } from '@/components/movies/LoadMovies';
 import { fetchNowPlayingMovies } from '@/services/tmdb';
 import { env } from '@/config/enviroment';
+import type { Movie } from "@/types/movie";
 
 const API_KEY = env.VITE_API_KEY ?? '';
-
-type Movie = {
-  id: number;
-  title: string;
-  poster_path: string | null;
-  vote_average: number;
-  // add other fields if needed
-};
 
 export function NowPlayingPage() {
   const [movies, setMovies] = useState<Movie[]>([]);

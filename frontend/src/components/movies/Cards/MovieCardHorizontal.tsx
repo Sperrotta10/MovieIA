@@ -7,13 +7,13 @@ import { toast } from "sonner";
 interface MovieCardHorizontalProps {
   id: string;
   title: string;
-  imageUrl: string;
-  rating: number;
+  poster_path: string;
+  vote_average: number;
   moviesCount: number; // Para manejar el scroll y restaurar la posición
 }
 
-export function MovieCardHorizontal({ id, title, imageUrl, rating, moviesCount }: MovieCardHorizontalProps) {
-  
+export function MovieCardHorizontal({ id, title, poster_path, vote_average, moviesCount }: MovieCardHorizontalProps) {
+
     const navigate = useNavigate();
 
     function handleCardClick() {
@@ -29,7 +29,7 @@ export function MovieCardHorizontal({ id, title, imageUrl, rating, moviesCount }
         if (!saved.toWatch) saved.toWatch = [];
 
         if (!saved.toWatch.find((m: any) => m.id === Number(id))) {
-          saved.toWatch.push({ id: Number(id), title, imageUrl, rating });
+          saved.toWatch.push({ id: Number(id), title, poster_path, vote_average });
           localStorage.setItem("watchlistData", JSON.stringify(saved));
 
           toast.success(`"${title}" se agregó a tu watchlist 🎬`, { duration: 2500 });
@@ -55,7 +55,7 @@ export function MovieCardHorizontal({ id, title, imageUrl, rating, moviesCount }
           "
           >
               <img
-                  src={imageUrl}
+                  src={poster_path}
                   alt={title}
                   className="absolute inset-0 w-full h-full object-cover"
               />
@@ -71,7 +71,7 @@ export function MovieCardHorizontal({ id, title, imageUrl, rating, moviesCount }
             <div className="flex items-center gap-1 text-yellow-400 mt-1">
               <Star className="w-4 h-4 fill-yellow-400" />
               <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-                {rating.toFixed(1)}
+                {vote_average.toFixed(1)}
               </span>
             </div>
           </CardContent>

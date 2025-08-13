@@ -2,16 +2,9 @@ import { useState, useEffect } from 'react';
 import { LoadMovies } from '@/components/movies/LoadMovies';
 import { fetchUpcomingMovies } from '@/services/tmdb';
 import { env } from '@/config/enviroment';
+import type { Movie } from "@/types/movie";
 
 const API_KEY = env.VITE_API_KEY ?? ''; // Reemplaza aquí tu key
-
-type Movie = {
-  id: number;
-  title: string;
-  poster_path: string | null;
-  vote_average: number;
-  // add other fields if needed
-};
 
 export function ProximamentePage() {
   const [movies, setMovies] = useState<Movie[]>([]);

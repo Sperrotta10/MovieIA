@@ -1,18 +1,4 @@
-
-interface CastMember {
-    cast_id: number;
-    character: string;
-    name: string;
-    profile_path: string | null;
-}
-
-interface CrewMember {
-    credit_id: string;
-    department: string;
-    job: string;
-    name: string;
-    profile_path: string | null;
-}
+import type { CastMember, CrewMember } from "@/types/movie";
 
 export function CastCrew({ credits }: { credits: { cast: CastMember[]; crew: CrewMember[] } | null }) {
 

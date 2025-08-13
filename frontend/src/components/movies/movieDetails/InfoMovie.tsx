@@ -1,5 +1,6 @@
 import { CastCrew } from "@/components/movies/MovieDetails/Cast_crew"
 import { ButtonsAction } from "@/components/movies/MovieDetails/ButtonsAction"
+import type { MovieDetail, CastMember, CrewMember } from "@/types/movie";
 
 interface InfoMovieProps {
     movie: MovieDetail;
@@ -12,35 +13,6 @@ interface InfoMovieProps {
     handleToggleMovie: (action: "toWatch" | "watched" | "favorites", movie: MovieDetail) => void;
     credits: { cast: CastMember[]; crew: CrewMember[] };
 }
-
-type MovieDetail = {
-  id: number;
-  title: string;
-  overview: string;
-  poster_path: string;
-  backdrop_path: string;
-  vote_average: number;
-  release_date: string;
-  genre_ids: number[]; 
-  runtime: number;
-  vote_count: number;
-  genres?: { id: number; name: string }[]; // Géneros opcionales
-};
-
-type CastMember = {
-  cast_id: number;
-  character: string;
-  name: string;
-  profile_path: string | null;
-};
-
-type CrewMember = {
-  credit_id: string;
-  department: string;
-  job: string;
-  name: string;
-  profile_path: string | null;
-};
 
 export function InfoMovie({ movie, seen, watchlist, favorite, setSeen, setWatchlist, setFavorite, handleToggleMovie, credits }: InfoMovieProps) {
 

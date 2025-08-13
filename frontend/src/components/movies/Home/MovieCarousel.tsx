@@ -1,13 +1,8 @@
 import { MovieCard } from "@/components/movies/Cards/MovieCard"
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
+import type { Movie } from "@/types/movie";
 
-type Movie = {
-  id: number;
-  title: string;
-  poster_path: string;
-  vote_average: number;
-};
 
 interface MovieCarouselProps {
   movies: Movie[];
@@ -49,8 +44,8 @@ export function MovieCarousel({ movies }: MovieCarouselProps) {
             <MovieCard
               id={movie.id.toString()}
               title={movie.title}
-              imageUrl={movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : "/no-image.png"}
-              rating={movie.vote_average ?? 0}
+              poster_path={movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : "/no-image.png"}
+              vote_average={movie.vote_average ?? 0}
               moviesCount={firtsTenMovies.length}
             />
           </div>

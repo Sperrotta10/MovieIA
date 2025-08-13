@@ -2,14 +2,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import type { Movie } from "@/types/movie";
 
-interface Movie {
-    id: number;
-    title: string;
-    overview: string;
-    imageUrl: string;
-    rating: number;
-}
 
 export function MovieCardMsg({ movie }: { movie: Movie }) {
 
@@ -27,7 +21,7 @@ export function MovieCardMsg({ movie }: { movie: Movie }) {
         if (!saved.toWatch) saved.toWatch = [];
 
         if (!saved.toWatch.find((m: any) => m.id === Number(movie.id))) {
-          saved.toWatch.push({ id: Number(movie.id), title: movie.title, imageUrl: movie.imageUrl, rating: movie.rating });
+          saved.toWatch.push({ id: Number(movie.id), title: movie.title, poster_path: movie.poster_path, vote_average: movie.vote_average });
           localStorage.setItem("watchlistData", JSON.stringify(saved));
 
           toast.success(`"${movie.title}" se agregó a tu watchlist 🎬`, { duration: 2500 });
@@ -40,12 +34,12 @@ export function MovieCardMsg({ movie }: { movie: Movie }) {
         <Card onClick={(e) => handleCardClick(e)} key={movie.id} className="p-0">
             <CardContent className="p-2 flex-1 flex flex-col justify-between">
                 <img
-                    src={movie.imageUrl}
+                    src={movie.poster_path}
                     alt={movie.title}
                     className="rounded-lg w-full object-cover mb-2"
                 />
                 <p className="text-sm font-medium">{movie.title}</p>
-                <p className="text-xs text-muted-foreground">⭐ {movie.rating}</p>
+                <p className="text-xs text-muted-foreground">⭐ {movie.vote_average}</p>
                 <div className="flex gap-2 mt-2">
                     <Button
                         size="sm"

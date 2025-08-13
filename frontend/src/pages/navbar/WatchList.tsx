@@ -3,13 +3,8 @@ import { MovieCard } from "@/components/movies/Cards/MovieCard";
 import { useIsMobile } from "@/hooks/IsMovil"
 import { SideBar } from "@/components/NavBar/WhatchList/sidebar/SideBar"
 import { ButtonsMobile } from "@/components/NavBar/WhatchList/sidebar/ButtonsMobile";
+import type { Movie } from "@/types/movie";
 
-type Movie = {
-  id: number;
-  title: string;
-  imageUrl: string;
-  rating: number;
-};
 
 type Section = "toWatch" | "watched" | "favorites";
 
@@ -75,8 +70,8 @@ export function WatchlistPage() {
                         <MovieCard
                         id={movie.id.toString()}
                         title={movie.title}
-                        imageUrl={movie.imageUrl}
-                        rating={movie.rating}
+                        poster_path={movie.poster_path}
+                        vote_average={movie.vote_average}
                         horizontal={isMobile}
                         moviesCount={lists[activeSection].length}
                         />

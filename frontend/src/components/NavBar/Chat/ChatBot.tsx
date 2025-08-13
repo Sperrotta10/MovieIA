@@ -15,8 +15,8 @@ interface Message {
     id: number;
     title: string;
     overview: string;
-    imageUrl: string;
-    rating: number;
+    poster_path: string;
+    vote_average: number;
   }[];
 }
 

@@ -4,44 +4,9 @@ import { fetchMovieDetails, fetchMovieCredits } from '@/services/tmdb';
 import { env } from '@/config/enviroment';
 import { toast } from 'sonner';
 import { InfoMovie } from "@/components/movies/MovieDetails/InfoMovie"
+import type { Movie, CastMember, CrewMember, MovieDetail } from "@/types/movie";
 
 const API_KEY = env.VITE_API_KEY ?? '';
-
-type CastMember = {
-  cast_id: number;
-  character: string;
-  name: string;
-  profile_path: string | null;
-};
-
-type CrewMember = {
-  credit_id: string;
-  department: string;
-  job: string;
-  name: string;
-  profile_path: string | null;
-};
-
-type MovieDetail = {
-  id: number;
-  title: string;
-  overview: string;
-  poster_path: string;
-  backdrop_path: string;
-  vote_average: number;
-  release_date: string;
-  genre_ids: number[]; 
-  runtime: number;
-  vote_count: number;
-  genres?: { id: number; name: string }[]; // Géneros opcionales
-};
-
-type Movie = {
-  id: number;
-  title: string;
-  imageUrl: string;
-  rating: number;
-};
 
 export function MovieDetails() {
 
@@ -125,8 +90,8 @@ export function MovieDetails() {
       savedData[action].push({
         id: movie.id,
         title: movie.title,
-        imageUrl: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-        rating: movie.vote_average ?? 0
+        poster_path: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+        vote_average: movie.vote_average ?? 0
       });
       localStorage.setItem("watchlistData", JSON.stringify(savedData));
       toast.success(`"${movie.title}" se agregó a ${getListName(action)} 🎬`);
