@@ -1,11 +1,26 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { fetchMovieDetails } from '@/services/tmdb';
+import { fetchMovieDetails, fetchMovieCredits } from '@/services/tmdb';
 import { env } from '@/config/enviroment';
-import { Star, Eye, Clock } from 'lucide-react';
 import { toast } from 'sonner';
+import { InfoMovie } from "@/components/movies/movieDetails/InfoMovie"
 
 const API_KEY = env.VITE_API_KEY ?? '';
+
+type CastMember = {
+  cast_id: number;
+  character: string;
+  name: string;
+  profile_path: string | null;
+};
+
+type CrewMember = {
+  credit_id: string;
+  department: string;
+  job: string;
+  name: string;
+  profile_path: string | null;
+};
 
 type MovieDetail = {
   id: number;
@@ -33,6 +48,7 @@ export function MovieDetails() {
   // Declaracion de variables
   const { id } = useParams<{ id: string }>();
   const [movie, setMovie] = useState<MovieDetail | null>(null);
+  const [credits, setCredits] = useState<{ cast: CastMember[]; crew: CrewMember[] } | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Estados para las acciones del usuario
@@ -54,6 +70,20 @@ export function MovieDetails() {
       }
     }
     movieDetails();
+  }, [id]);
+
+  // obtener el cast + crew de la pelicula
+  useEffect(() => {
+    async function getCredits() {
+      try {
+        if (!id) return;
+        const creditsData = await fetchMovieCredits(id, API_KEY);
+        setCredits(creditsData.results ? creditsData.results[0] : creditsData);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getCredits();
   }, [id]);
 
   // Cargar el estado de las acciones del usuario desde localStorage
@@ -142,85 +172,18 @@ export function MovieDetails() {
         />
 
         {/* Info */}
-        <div className="md:col-span-2 space-y-4">
-          <div className="flex items-start justify-between">
-            <h1 className="text-4xl font-bold">{movie.title}</h1>
-            
-            {/* Botones de acción */}
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => {handleToggleMovie("watched", movie); setSeen(!seen)}}
-                className={`
-                  p-2 rounded-full border
-                  border-gray-400/40 dark:border-white/20
-                  hover:scale-110 transition
-                  ${seen 
-                    ? 'bg-green-500 text-black' 
-                    : 'bg-gray-200 text-black dark:bg-white/10 dark:text-white'}
-                `}
-                title={seen ? "Marcado como visto" : "Marcar como visto"}
-              >
-                <Eye size={20} />
-              </button>
+        <InfoMovie
+          movie={movie}
+          seen={seen}
+          watchlist={watchlist}
+          favorite={favorite}
+          setSeen={setSeen}
+          setWatchlist={setWatchlist}
+          setFavorite={setFavorite}
+          handleToggleMovie={handleToggleMovie}
+          credits={credits ?? { cast: [], crew: [] }}
+        />
 
-              <button
-                onClick={() => {handleToggleMovie("toWatch", movie); setWatchlist(!watchlist)}}
-                className={`
-                  p-2 rounded-full border
-                  border-gray-400/40 dark:border-white/20
-                  hover:scale-110 transition
-                  ${watchlist 
-                    ? 'bg-blue-500 text-black' 
-                    : 'bg-gray-200 text-black dark:bg-white/10 dark:text-white'}
-                `}
-                title={watchlist ? "En tu watchlist" : "Agregar a watchlist"}
-              >
-                <Clock size={20} />
-              </button>
-
-              <button
-                onClick={() => {handleToggleMovie("favorites", movie); setFavorite(!favorite)}}
-                className={`
-                  p-2 rounded-full border
-                  border-gray-400/40 dark:border-white/20
-                  hover:scale-110 transition
-                  ${favorite 
-                    ? 'bg-yellow-400 text-black' 
-                    : 'bg-gray-200 text-black dark:bg-white/10 dark:text-white'}
-                `}
-                title={favorite ? "En favoritos" : "Agregar a favoritos"}
-              >
-                <Star size={20} />
-              </button>
-            </div>
-          </div>
-
-          <p className="text-gray-600 dark:text-gray-400">
-            {movie.release_date} • {movie.runtime} min
-          </p>
-
-          {/* Rating */}
-          <div className="flex items-center gap-2">
-            <span className="text-yellow-400 text-xl">★</span>
-            <span className="text-lg">{movie.vote_average.toFixed(1)}</span>
-            <span className="text-gray-600 dark:text-gray-400 text-sm">({movie.vote_count} votos)</span>
-          </div>
-
-          {/* Géneros */}
-          <div className="flex flex-wrap gap-2">
-            {movie.genres?.map((genre) => (
-              <span
-                key={genre.id}
-                className="bg-gray-200 text-sm px-3 py-1 rounded-full border border-gray-400/40 dark:bg-white/10 dark:text-white dark:border-white/20"
-              >
-                {genre.name}
-              </span>
-            ))}
-          </div>
-
-          {/* Descripción */}
-          <p className="text-gray-700 dark:text-gray-300">{movie.overview}</p>
-        </div>
       </div>
     </div>
   );
