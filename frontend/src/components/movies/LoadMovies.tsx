@@ -3,6 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { MovieCard } from '@/components/movies/Cards/MovieCard';
 import { useIsMobile } from '@/hooks/IsMovil';
 //import { useScrollRestoration } from '@/hooks/useScrollRestoration'
+import movie_unknow from "@/assets/movie_unknow.jpg";
 
 interface LoadMoviesProps {
     movies: {
@@ -53,7 +54,7 @@ export function LoadMovies({ movies, fetchMoreMovies, hasMore }: LoadMoviesProps
             poster_path={
               movie.poster_path
                 ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
-                : "/no-image.png"
+                : movie_unknow
             }
             vote_average={movie.vote_average}
             horizontal={isMobile}

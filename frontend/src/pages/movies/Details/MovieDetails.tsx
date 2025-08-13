@@ -5,6 +5,7 @@ import { env } from '@/config/enviroment';
 import { toast } from 'sonner';
 import { InfoMovie } from "@/components/movies/movieDetails/InfoMovie"
 import type { Movie, CastMember, CrewMember, MovieDetail } from "@/types/movie";
+import movie_unknow from "@/assets/movie_unknow.jpg";
 
 const API_KEY = env.VITE_API_KEY ?? '';
 
@@ -90,7 +91,7 @@ export function MovieDetails() {
       savedData[action].push({
         id: movie.id,
         title: movie.title,
-        poster_path: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+        poster_path: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : movie_unknow,
         vote_average: movie.vote_average ?? 0
       });
       localStorage.setItem("watchlistData", JSON.stringify(savedData));
@@ -131,7 +132,7 @@ export function MovieDetails() {
         
         {/* Poster */}
         <img
-          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : movie_unknow}
           alt={movie.title}
           className="rounded-lg shadow-2xl w-full max-h-[500px] object-cover"
         />

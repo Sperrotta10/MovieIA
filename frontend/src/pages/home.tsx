@@ -5,6 +5,7 @@ import { fetchNowPlayingMovies, fetchPopularMovies, fetchTopRatedMovies, fetchUp
 import { useState, useEffect } from "react";
 import { useScrollRestoration } from "@/hooks/useScrollRestoration";
 import { env } from "@/config/enviroment";
+import movie_unknow from "@/assets/movie_unknow.jpg";
 
 const API_KEY = env.VITE_API_KEY ?? ''; // Reemplaza aquí tu key
 
@@ -48,7 +49,7 @@ export function Home() {
         return movies.map(movie => ({
             id: movie.id,
             title: movie.title,
-            poster_path: movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : "/no-image.png",
+            poster_path: movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : movie_unknow,
             vote_average: movie.vote_average ?? 0,
         }));
     };

@@ -8,6 +8,7 @@ import { useIsMobile } from '@/hooks/IsMovil';
 //import { useScrollRestoration } from '@/hooks/useScrollRestoration';
 import { env } from "@/config/enviroment";
 import type { Movie } from "@/types/movie";
+import movie_unknow from "@/assets/movie_unknow.jpg";
 
 const API_KEY = env.VITE_API_KEY ?? "";
 
@@ -99,7 +100,7 @@ export const SearchResults = () => {
               title: movie.title,
               poster_path: movie.poster_path
                 ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
-                : "/no-image.png",
+                : movie_unknow,
               vote_average: movie.vote_average ?? 0,
               moviesCount: results.length,
             };

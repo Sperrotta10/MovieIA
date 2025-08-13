@@ -1,4 +1,5 @@
 import type { CastMember, CrewMember } from "@/types/movie";
+import user_unknow from "@/assets/user_unknow.jpg"
 
 export function CastCrew({ credits }: { credits: { cast: CastMember[]; crew: CrewMember[] } | null }) {
 
@@ -13,7 +14,7 @@ export function CastCrew({ credits }: { credits: { cast: CastMember[]; crew: Cre
                     src={
                         actor.profile_path
                         ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
-                        : 'https://via.placeholder.com/120x180?text=No+Image'
+                        : user_unknow
                     }
                     alt={actor.name}
                     className="rounded-lg w-[120px] h-[180px] object-cover mb-2"
@@ -34,7 +35,7 @@ export function CastCrew({ credits }: { credits: { cast: CastMember[]; crew: Cre
                         src={
                         member.profile_path
                             ? `https://image.tmdb.org/t/p/w185${member.profile_path}`
-                            : 'https://via.placeholder.com/120x180?text=No+Image'
+                            : user_unknow
                         }
                         alt={member.name}
                         className="rounded-lg w-[120px] h-[180px] object-cover mb-2"

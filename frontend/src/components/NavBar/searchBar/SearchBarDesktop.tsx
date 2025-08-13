@@ -1,5 +1,5 @@
 import { Search } from "lucide-react";
-
+import movie_unknow from "@/assets/movie_unknow.jpg";
 
 interface SearchBarDesktopProps {
   searchTerm: string;
@@ -45,7 +45,7 @@ export function SearchBarDesktop({ searchTerm, setSearchTerm, searchResults, set
               className="flex items-center gap-3 px-4 py-2 hover:bg-zinc-700 cursor-pointer transition-colors"
             >
               <img
-                src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`}
+                src={movie.poster_path ? `https://image.tmdb.org/t/p/w92${movie.poster_path}` : movie_unknow}
                 alt={movie.title}
                 className="w-10 h-16 object-cover rounded"
               />
