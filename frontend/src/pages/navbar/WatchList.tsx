@@ -37,31 +37,6 @@ export function WatchlistPage() {
         }
     }, []);
 
-    const removeFromList = (section: Section, id: number) => {
-        setLists((prev) => ({
-        ...prev,
-        [section]: prev[section].filter((movie) => movie.id !== id),
-        }));
-        localStorage.setItem("watchlistData", JSON.stringify({
-            ...lists,
-            [section]: lists[section].filter((movie) => movie.id !== id),
-        }));
-        
-    };
-
-    const moveToList = (from: Section, to: Section, movie: Movie) => {
-        setLists((prev) => ({
-        ...prev,
-        [from]: prev[from].filter((m) => m.id !== movie.id),
-        [to]: [...prev[to], movie],
-        }));
-        localStorage.setItem("watchlistData", JSON.stringify({
-            ...lists,
-            [from]: lists[from].filter((m) => m.id !== movie.id),
-            [to]: [...lists[to], movie],
-        }));
-    };
-
     const sections: Section[] = ["toWatch", "watched", "favorites"];
     const labels = {
         toWatch: "🎯 Quiero ver",
@@ -105,32 +80,6 @@ export function WatchlistPage() {
                         horizontal={isMobile}
                         moviesCount={lists[activeSection].length}
                         />
-
-                        {/* Botones de acción */}
-                        <div className="absolute top-2 right-7 flex flex-row md:flex-col gap-2 md:gap-1">
-                        {activeSection !== "favorites" && (
-                            <button
-                            className="bg-yellow-500 p-1 md:px-2 md:py-1 rounded text-sm transition-transform hover:scale-110"
-                            onClick={() => moveToList(activeSection, "favorites", movie)}
-                            >
-                            ⭐
-                            </button>
-                        )}
-                        {activeSection !== "watched" && (
-                            <button
-                            className="bg-green-500 p-1 md:px-2 md:py-1 rounded text-sm transition-transform hover:scale-110"
-                            onClick={() => moveToList(activeSection, "watched", movie)}
-                            >
-                            ✅
-                            </button>
-                        )}
-                        <button
-                            className="bg-red-500 p-1 md:px-2 md:py-1 rounded text-sm transition-transform hover:scale-110"
-                            onClick={() => removeFromList(activeSection, movie.id)}
-                        >
-                            🗑
-                        </button>
-                        </div>
                     </div>
                     ))}
                 </div>
