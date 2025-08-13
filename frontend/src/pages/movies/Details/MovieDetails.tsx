@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { fetchMovieDetails, fetchMovieCredits } from '@/services/tmdb';
 import { env } from '@/config/enviroment';
 import { toast } from 'sonner';
-import { InfoMovie } from "@/components/movies/MovieDetails/InfoMovie"
+import { InfoMovie } from "@/components/movies/movieDetails/InfoMovie"
 import type { Movie, CastMember, CrewMember, MovieDetail } from "@/types/movie";
 
 const API_KEY = env.VITE_API_KEY ?? '';

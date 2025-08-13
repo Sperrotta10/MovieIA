@@ -1,5 +1,5 @@
-import { CastCrew } from "@/components/movies/MovieDetails/Cast_crew"
-import { ButtonsAction } from "@/components/movies/MovieDetails/ButtonsAction"
+import { CastCrew } from "@/components/movies/movieDetails/Cast_crew"
+import { ButtonsAction } from "@/components/movies/movieDetails/ButtonsAction"
 import type { MovieDetail, CastMember, CrewMember } from "@/types/movie";
 
 interface InfoMovieProps {
