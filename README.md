@@ -1,6 +1,8 @@
 # 🎬 MovieIA — Recomendador de Películas Inteligente
 
-MovieIA es una aplicación web moderna que te permite descubrir y explorar películas de forma visual, rápida e intuitiva. Presenta una interfaz tipo **carrusel horizontal**, donde podrás navegar entre los títulos populares y agregarlos a tu **Watchlist**. Próximamente, se integrará un **chatbot basado en IA** para recomendarte películas según tus gustos.
+MovieIA es una aplicación web moderna diseñada para que descubras y explores películas de manera visual, rápida e intuitiva. Su interfaz presenta un elegante carrusel horizontal, que te permite navegar fácilmente entre los títulos más populares y añadirlos a tu Watchlist con un solo clic.
+
+Además, incorpora un ChatBot impulsado por inteligencia artificial, capaz de recomendarte películas personalizadas según los parámetros y preferencias que le indiques en tus mensajes.
 
 ---
 
@@ -10,7 +12,8 @@ MovieIA es una aplicación web moderna que te permite descubrir y explorar pelí
 - 🌙 Soporte completo para modo oscuro
 - 🧠 Preparado para integración con chatbot (IA)
 - ✅ Interfaz responsiva y moderna
-- 🔖 Funcionalidad para agregar películas a tu Watchlist
+- 🔖 Funcionalidad para agregar películas a tu Watchlist, peliculas favoritas o peliculas vistas
+- 🔍 Buscador de peliculas
 - 🎨 Estilo limpio gracias a Tailwind + shadcn/ui
 
 ---
@@ -66,18 +69,120 @@ MovieIA es una aplicación web moderna que te permite descubrir y explorar pelí
 
 ```bash
 MovieIA/
-├── backend/ # API y lógica del servidor (futuro)
-│ └── ...
-├── frontend/ # Aplicación React + Tailwind
-│ ├── public/
-│ ├── src/
-│ │ ├── components/ # MovieCard, MovieCarousel, etc.
-│ │ ├── pages/ # Páginas (Home, Watchlist, etc.)
-│ │ ├── styles/ # Estilos globales
-│ │ ├── index.css
-│ │ ├── main.tsx
-│ ├── tailwind.config.js # Configuración Tailwind (opcional)
-│ └── package.json
+├── backend/                       # API y lógica del servidor
+│   └── src/
+│       ├── app.js                  # Punto de entrada del backend
+│       ├── config/
+│       │   └── enviroment.js       # Configuración de variables de entorno
+│       ├── controller/
+│       │   └── chat.controller.js  # Controlador para el chatbot
+│       ├── model/
+│       │   └── chat.service.js     # Servicio de datos para el chat
+│       ├── router/
+│       │   └── chat.route.js       # Rutas del chatbot
+│       └── service/
+│           ├── tmdb.js             # Integración con API de TMDB
+│           └── utils/
+│               ├── entities.js     # Definiciones y entidades auxiliares
+│               └── metodos_aux.js  # Métodos auxiliares
+│
+├── frontend/                      # Aplicación cliente en React + TailwindCSS
+│   ├── vite.svg
+│   │
+│   └── src/
+│       ├── App.tsx
+│       ├── main.tsx
+│       ├── vite-env.d.ts
+│       │
+│       ├── assets/                # Recursos estáticos
+│       │   ├── movie_unknow.jpg
+│       │   ├── react.svg
+│       │   └── user_unknow.jpg
+│       │
+│       ├── components/            # Componentes reutilizables
+│       │   ├── ScrollTop.tsx
+│       │   │
+│       │   ├── movies/
+│       │   │   ├── LoadMovies.tsx
+│       │   │   │
+│       │   │   ├── Cards/         # Tarjetas para mostrar películas
+│       │   │   │   ├── MovieCard.tsx
+│       │   │   │   └── MovieCardHorizontal.tsx
+│       │   │   │
+│       │   │   ├── Home/
+│       │   │   │   └── MovieCarousel.tsx
+│       │   │   │
+│       │   │   └── movieDetails/  # Vista de detalles de película
+│       │   │       ├── ButtonsAction.tsx
+│       │   │       ├── Cast_crew.tsx
+│       │   │       └── InfoMovie.tsx
+│       │   │
+│       │   ├── NavBar/            # Barra de navegación y subcomponentes
+│       │   │   ├── NavBar.tsx
+│       │   │   │
+│       │   │   ├── Chat/
+│       │   │   │   ├── ChatBot.tsx
+│       │   │   │   └── movie/
+│       │   │   │       └── MovieCardMsg.tsx
+│       │   │   │
+│       │   │   ├── navigation/
+│       │   │   │   ├── ButtonsNavigation.tsx
+│       │   │   │   └── ButtonsNavigationMobile.tsx
+│       │   │   │
+│       │   │   ├── searchBar/
+│       │   │   │   ├── SearchBarDesktop.tsx
+│       │   │   │   └── SearchBarMobile.tsx
+│       │   │   │
+│       │   │   └── WhatchList/
+│       │   │       └── sidebar/
+│       │   │           ├── ButtonsMobile.tsx
+│       │   │           └── SideBar.tsx
+│       │   │
+│       │   └── ui/                 # Componentes UI de bajo nivel
+│       │       ├── button.tsx
+│       │       ├── card.tsx
+│       │       ├── input.tsx
+│       │       └── sonner.tsx
+│       │
+│       ├── config/                 # Configuración general
+│       │   └── enviroment.tsx
+│       │
+│       ├── hooks/                  # Hooks personalizados
+│       │   ├── IsMovil.tsx
+│       │   ├── ModeOscuro.tsx
+│       │   ├── useScrollRestoration.tsx
+│       │   └── utils.ts
+│       │
+│       ├── pages/                  # Vistas principales
+│       │   ├── home.tsx
+│       │   ├── NotFound404.tsx
+│       │   │
+│       │   ├── movies/
+│       │   │   ├── NowPlaying.tsx
+│       │   │   ├── Popular.tsx
+│       │   │   ├── Proximamente.tsx
+│       │   │   ├── TopRaiting.tsx
+│       │   │   └── Details/
+│       │   │       └── MovieDetails.tsx
+│       │   │
+│       │   └── navbar/
+│       │       ├── Chat.tsx
+│       │       ├── SearchResults.tsx
+│       │       └── WatchList.tsx
+│       │
+│       ├── routes/
+│       │   └── routes.tsx
+│       │
+│       ├── services/               # Servicios API
+│       │   ├── chat_ia.ts
+│       │   └── tmdb.ts
+│       │
+│       ├── styles/
+│       │   └── index.css
+│       │
+│       └── types/                  # Tipos TypeScript
+│           └── movie.ts
+│
 └── README.md
 ```
 
@@ -85,23 +190,27 @@ MovieIA/
 
 ## 🚀 Cómo ejecutar el proyecto
 
+### Pasos para Frontend y Backend
+
 1. Clona el repositorio:
 
 ```bash
-git clone https://github.com/tuusuario/MovieIA.git
-cd MovieIA/frontend
-   ```
-
-2. Instalar las dependencias
-
-```bash
-npm install
+git clone https://github.com/Sperrotta10/MovieIA
+cd frontend
+cd backend
 ```
 
-3. Ejecutar el programa
+2. Instalar las dependencias (Frontend and Backend)
+
+```bash
+npm install 
+```
+
+3. Ejecutar el programa (Frontend and Backend)
 
 ```bash
 npm run dev
+npm start
 ```
 
 ---
@@ -110,7 +219,7 @@ npm run dev
 
 - 🤖 Permitir que el chatBot puede recomendar series
 - 🔐 Login de usuario
-- 📱 Versión optimizada para dispositivos móviles
+- 🫙 Base de datos para almacenar informacion de los usuarios o del sistema
 
 ---
 
