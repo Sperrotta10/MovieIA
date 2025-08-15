@@ -43,8 +43,9 @@ export function ButtonsNavigationMobile({ isLoggedIn, isDark, toggleDarkMode, na
                     toggleDarkMode();
                     setMenuOpen(false);
                 }}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 notranslate"
                 aria-label="Toggle Dark Mode"
+                translate="no"
                 >
                 {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                 {isDark ? " Claro" : " Oscuro"}

@@ -39,9 +39,10 @@ export function ButtonsNavigation({ isLoggedIn, isDark, toggleDarkMode, navigate
 
             <button
             onClick={toggleDarkMode}
-            className="flex items-center gap-1 px-3 py-1 bg-neonBlue text-white rounded hover:bg-neonGreen transition"
+            className="flex items-center gap-1 px-3 py-1 bg-neonBlue text-white rounded hover:bg-neonGreen transition notranslate"
             aria-label="Toggle Dark Mode"
             title="Toggle Dark Mode"
+            translate="no"
             >
             {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             {isDark ? " Claro" : " Oscuro"}

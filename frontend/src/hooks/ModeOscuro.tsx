@@ -10,16 +10,21 @@ export function useDarkMode() {
   });
 
   useEffect(() => {
-    const className = "dark";
-    const html = window.document.documentElement;
+    try {
+      const className = "dark";
+      const html = window.document.documentElement;
 
-    if (isDark) {
-      html.classList.add(className);
-      localStorage.setItem("darkMode", "true");
-    } else {
-      html.classList.remove(className);
-      localStorage.setItem("darkMode", "false");
+      if (isDark) {
+        html.classList.add(className);
+        localStorage.setItem("darkMode", "true");
+      } else {
+        html.classList.remove(className);
+        localStorage.setItem("darkMode", "false");
+      }
+    } catch (error) {
+      console.error("Error al establecer el modo oscuro:", error);
     }
+    
   }, [isDark]);
 
   return [isDark, setIsDark] as const;
