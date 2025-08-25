@@ -43,7 +43,7 @@ export function NowPlayingPage() {
 
 
   return (
-    <div className="min-h-screen bg-darkBg text-white p-8 max-w-[1325px] mx-auto">
+    <div className="min-h-screen bg-darkBg text-foreground p-8 max-w-[1325px] mx-auto">
       <h1 className="text-4xl font-bold mb-6 drop-shadow-[0_0_6px_#00ffff]">
         🎬 Películas en cartelera
       </h1>
