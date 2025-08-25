@@ -1,4 +1,5 @@
 import { environment } from "../../config/enviroment.js";
+import axios from "axios";
 
 const api_key = environment.tmdbApiKey;
 const base_url = environment.tmdbBaseUrl;
