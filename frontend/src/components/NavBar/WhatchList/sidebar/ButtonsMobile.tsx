@@ -14,14 +14,14 @@ export function ButtonsMobile({ sections, activeSection, setActiveSection }: But
     };
 
     return(
-        <div className="md:hidden fixed left-0 right-0 p-2 flex justify-around z-40 border-b border-zinc-700">
+        <div className="md:hidden left-0 right-0 p-2 flex justify-around border-b border-zinc-700">
             {sections.map((section) => (
             <button
                 key={section}
-                className={`px-3 py-2 rounded-lg transition font-semibold ${
+                className={`w-32 h-20 px-3 py-2 rounded-lg transition font-semibold ${
                 activeSection === section
                     ? "bg-blue-600 text-white"
-                    : "text-zinc-300 hover:bg-zinc-700"
+                    : "text-foreground hover:bg-zinc-700"
                 }`}
                 onClick={() => setActiveSection(section)}
             >

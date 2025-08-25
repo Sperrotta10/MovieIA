@@ -42,44 +42,49 @@ export function WatchlistPage() {
     return (
         <div className="flex min-h-screen">
             {/* Sidebar Desktop */}
-            <SideBar
-                sections={sections}
-                activeSection={activeSection}
-                setActiveSection={setActiveSection}
-            />
+            <div className="hidden md:block">
+                <SideBar
+                    sections={sections}
+                    activeSection={activeSection}
+                    setActiveSection={setActiveSection}
+                />
+            </div>
+            
 
-            {/* Mobile top buttons */}
-            <ButtonsMobile
-                sections={sections}
-                activeSection={activeSection}
-                setActiveSection={setActiveSection}
-            />
+            <div className="flex-1 flex flex-col">
+                {/* Botones móviles arriba */}
+                <ButtonsMobile
+                    sections={sections}
+                    activeSection={activeSection}
+                    setActiveSection={setActiveSection}
+                />
 
-            {/* Main content */}
-            <main className="flex-1 p-6 pt-20 md:pt-6">
-                <h1 className="text-2xl font-semibold mb-4">
-                {labels[activeSection]}
-                </h1>
+                {/* Main content */}
+                <main className="flex-1 p-6 pt-20 md:pt-6">
+                    <h1 className="text-2xl font-semibold mb-4">
+                    {labels[activeSection]}
+                    </h1>
 
-                {lists[activeSection].length === 0 ? (
-                <p className="text-zinc-400">No tienes películas en esta sección.</p>
-                ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                    {lists[activeSection].map((movie) => (
-                    <div key={movie.id} className="relative">
-                        <MovieCard
-                        id={movie.id.toString()}
-                        title={movie.title}
-                        poster_path={movie.poster_path}
-                        vote_average={movie.vote_average}
-                        horizontal={isMobile}
-                        moviesCount={lists[activeSection].length}
-                        />
+                    {lists[activeSection].length === 0 ? (
+                    <p className="text-zinc-400">No tienes películas en esta sección.</p>
+                    ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                        {lists[activeSection].map((movie) => (
+                        <div key={movie.id} className="relative">
+                            <MovieCard
+                            id={movie.id.toString()}
+                            title={movie.title}
+                            poster_path={movie.poster_path}
+                            vote_average={movie.vote_average}
+                            horizontal={isMobile}
+                            moviesCount={lists[activeSection].length}
+                            />
+                        </div>
+                        ))}
                     </div>
-                    ))}
-                </div>
-                )}
-            </main>
+                    )}
+                </main>
+            </div>
         </div>
     );
 }
