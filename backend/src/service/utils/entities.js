@@ -133,11 +133,94 @@ export class EntitiesMovies {
                 if (similarMovies.length > 0) {
                     return { movies: similarMovies.map(m => MetodosAuxiliares.formatMovie(m)), notice: null };
                 }
-                // Si no hay similares que cumplan filtros, seguimos a búsqueda discover
+                return {
+                    movies: [],
+                    notice: `No se encontraron películas similares a "${entities.title}" con los filtros aplicados.`
+                };
             }
         } catch (e) {
             console.warn(`Error buscando película o similares con título ${entities.title}`, e.message);
             // Continuamos a discover
+        }
+    }
+
+    static async entities_Genre_Actor(entities) {
+
+        const [genreList, actorSearchResults] = await Promise.all([
+            MetodosAuxiliares.getGenres(),
+            entities.actor
+                ? Promise.all(
+                    (Array.isArray(entities.actor) ? entities.actor : [entities.actor])
+                    .map(actorName => axios.get(`${base_url}/search/person`, { params: { api_key, language: 'en-US', query: actorName } }))
+                )
+                : Promise.resolve(null)
+        ]);
+
+        return {
+            genres: genreList,
+            actors: actorSearchResults
+        };
+    }
+
+    static map_genres(genreList, entities) {
+        
+        let genreIds = [];
+        if (entities.genre) {
+            const genres = Array.isArray(entities.genre) ? entities.genre : [entities.genre];
+            genreIds = genres
+                .map(g => genreList.find(genre => genre.name.toLowerCase() === g.toLowerCase())?.id)
+                .filter(Boolean);
+        }
+
+        return genreIds;
+    }
+
+    static map_actors(actorSearchResults) {
+
+        let actorIds = [];
+        if (actorSearchResults) {
+            for (const res of actorSearchResults) {
+                if (res.data.results.length > 0) {
+                    actorIds.push(res.data.results[0].id);
+                }
+            }
+        }
+
+        return actorIds;
+    }
+
+
+    static async request_discover(params, actorIds, genreIds) {
+        try {
+            const res = await axios.get(`${base_url}/discover/movie?${params.toString()}`);
+            let results = res.data.results || [];
+
+            // Si no hay resultados, intentar suavizar filtros: quitar actores o géneros
+            if (results.length === 0) {
+                if (actorIds.length > 0) {
+                    // Quitar actores y buscar solo por géneros
+                    const paramsNoActors = new URLSearchParams({
+                        api_key: api_key,
+                        language: 'en-US',
+                        sort_by: 'popularity.desc',
+                        page: '1',
+                    });
+                    if (genreIds.length) paramsNoActors.set('with_genres', genreIds.join(','));
+                    const resNoActors = await axios.get(`${base_url}/discover/movie?${paramsNoActors.toString()}`);
+                    results = resNoActors.data.results || [];
+                }
+                if (results.length === 0 && genreIds.length === 0 && actorIds.length === 0) {
+                    // Buscar sin filtros (películas populares)
+                    const resPopular = await axios.get(`${base_url}/movie/popular?api_key=${api_key}&language=en-US&page=1`);
+                    results = resPopular.data.results || [];
+                }
+            }
+
+            return { movies: results.map(m => MetodosAuxiliares.formatMovie(m)), notice: null };
+            
+        } catch (e) {
+            console.error('Error fetching discover movies:', e.message);
+            return { movies: [], notice: 'Error fetching movies' };
         }
     }
 }

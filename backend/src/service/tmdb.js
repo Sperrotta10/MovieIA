@@ -30,34 +30,13 @@ export class TmdbService {
         // --- Búsqueda discover con filtros (géneros, actores, años, etc) ---
 
         // Obtener géneros y actores simultáneamente
-        const [genreList, actorSearchResults] = await Promise.all([
-            MetodosAuxiliares.getGenres(),
-            entities.actor
-                ? Promise.all(
-                    (Array.isArray(entities.actor) ? entities.actor : [entities.actor])
-                    .map(actorName => axios.get(`${base_url}/search/person`, { params: { api_key, language: 'en-US', query: actorName } }))
-                )
-                : Promise.resolve(null)
-        ]);
+        const { genres, actors } = await EntitiesMovies.entities_Genre_Actor(entities);
 
         // Mapear géneros a IDs
-        let genreIds = [];
-        if (entities.genre) {
-            const genres = Array.isArray(entities.genre) ? entities.genre : [entities.genre];
-            genreIds = genres
-                .map(g => genreList.find(genre => genre.name.toLowerCase() === g.toLowerCase())?.id)
-                .filter(Boolean);
-        }
+        const genreIds = EntitiesMovies.map_genres(genres, entities);
 
         // Mapear actores a IDs
-        let actorIds = [];
-        if (actorSearchResults) {
-            for (const res of actorSearchResults) {
-                if (res.data.results.length > 0) {
-                    actorIds.push(res.data.results[0].id);
-                }
-            }
-        }
+        const actorIds = EntitiesMovies.map_actors(actors);
 
         // Construir params para discover
         const params = new URLSearchParams({
@@ -92,36 +71,9 @@ export class TmdbService {
         }
 
         // Petición final discover
-        try {
-            const res = await axios.get(`${base_url}/discover/movie?${params.toString()}`);
-            let results = res.data.results || [];
+        const discoverResults = await EntitiesMovies.request_discover(params, actorIds, genreIds);
 
-            // Si no hay resultados, intentar suavizar filtros: quitar actores o géneros
-            if (results.length === 0) {
-                if (actorIds.length > 0) {
-                    // Quitar actores y buscar solo por géneros
-                    const paramsNoActors = new URLSearchParams({
-                        api_key: api_key,
-                        language: 'en-US',
-                        sort_by: 'popularity.desc',
-                        page: '1',
-                    });
-                    if (genreIds.length) paramsNoActors.set('with_genres', genreIds.join(','));
-                    const resNoActors = await axios.get(`${base_url}/discover/movie?${paramsNoActors.toString()}`);
-                    results = resNoActors.data.results || [];
-                }
-                if (results.length === 0 && genreIds.length === 0 && actorIds.length === 0) {
-                    // Buscar sin filtros (películas populares)
-                    const resPopular = await axios.get(`${base_url}/movie/popular?api_key=${api_key}&language=en-US&page=1`);
-                    results = resPopular.data.results || [];
-                }
-            }
-
-            return { movies: results.map(m => MetodosAuxiliares.formatMovie(m)), notice: null };
-        } catch (e) {
-            console.error('Error fetching discover movies:', e.message);
-            return { movies: [], notice: 'Error fetching movies' };
-        }
+        return discoverResults;
     }
 
 
