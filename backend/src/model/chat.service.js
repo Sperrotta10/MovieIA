@@ -20,17 +20,89 @@ export class ChatService {
         this.groq = new Groq({
             apiKey: environment.apiKey,
         });
+        this.availableModels = [];
+        this.modelIndex = 0;
+    }
+
+    // Carga y filtra modelos disponibles (excluye OpenAI/gpt/*) y prioriza algunos conocidos.
+    async loadModels() {
+        if (this.availableModels && this.availableModels.length) return this.availableModels;
+
+        const modelsResponse = await this.groq.models.list();
+        const rawList = Array.isArray(modelsResponse?.data) ? modelsResponse.data : modelsResponse;
+
+        const normalized = rawList
+            .map(m => ({ id: typeof m === 'string' ? m : m.id, owned_by: (typeof m === 'object' && m?.owned_by) ? m.owned_by : '' }))
+            .filter(m => m.id && !/\b(openai|oai|gpt|o3|o4)\b/i.test(m.id) && !/openai/i.test(m.owned_by || ''));
+
+        // Orden de preferencia: Llama 70B y otros buenos para chat.
+        const preferredOrder = [
+            'llama-3.3-70b-versatile',
+            'llama-3.1-70b-instant',
+            'llama-3.2-90b-text-preview',
+            'mixtral-8x7b',
+            'gemma2-9b-it',
+            'llama-3.1-8b-instant',
+            'llama-3-8b-instruct'
+        ];
+
+        const sortScore = id => {
+            const idx = preferredOrder.indexOf(id);
+            return idx === -1 ? Number.MAX_SAFE_INTEGER : idx;
+        };
+
+        const sorted = normalized
+            .map(m => m.id)
+            .sort((a, b) => sortScore(a) - sortScore(b));
+
+        // Eliminamos duplicados por si acaso
+        this.availableModels = Array.from(new Set(sorted));
+        this.modelIndex = 0;
+        return this.availableModels;
+    }
+
+    // Construye la lista de intentos: primero preferidos que existan, luego el resto.
+    async getAttemptList(preferredCandidates = []) {
+        const available = await this.loadModels();
+        const preferredAvailable = preferredCandidates.filter(id => available.includes(id));
+        const remaining = available.filter(id => !preferredAvailable.includes(id));
+        const attempts = [...preferredAvailable, ...remaining];
+        return attempts.length ? attempts : available;
+    }
+
+    // Ejecuta chat.completions con reintentos rotando entre modelos disponibles si hay errores de modelo.
+    async runChatWithFallback({ messages, response_format, preferredCandidates = [] }) {
+        const attempts = await this.getAttemptList(preferredCandidates);
+        let lastError;
+        for (const model of attempts) {
+            try {
+                const resp = await this.groq.chat.completions.create({ model, messages, response_format });
+                return { modelUsed: model, response: resp };
+            } catch (err) {
+                const code = err?.error?.code || err?.code;
+                const type = err?.error?.type || err?.type;
+                const isModelError = code === 'model_not_found' || type === 'invalid_request_error' || /model/i.test(err?.message || '') || /404/.test(err?.message || '');
+                lastError = err;
+                if (isModelError) {
+                    continue; // probar siguiente modelo
+                }
+                // Errores no relacionados al modelo: salir
+                throw err;
+            }
+        }
+        // Si ninguno funcionó, lanzamos último error o uno más claro
+        throw new Error(lastError?.message || 'No hay modelos disponibles válidos en Groq para chat.completions.');
     }
 
     // Metodo para clasificar la intención del usuario.
     async getIntent(message) {
-        console.log("Modelos existentes:", await this.groq.models.list());
-        const response = await this.groq.chat.completions.create({
-            model: 'llama-3.3-70b-versátil', // compound-beta-mini o meta-llama/llama-prompt-guard-2-22m o -86m
+        // Selecciona dinámicamente un modelo disponible y confiable para clasificación.
+        const { response } = await this.runChatWithFallback({
+            preferredCandidates: ['llama-3.3-70b-versatile', 'llama-3.1-70b-instant', 'mixtral-8x7b'],
             messages: [
                 {
                     role: 'system',
-                        content: `
+                    content: `
                             Eres un clasificador de intenciones para un chatbot de recomendación de películas.
 
                             Tu tarea es analizar el mensaje del usuario y devolver SOLO un objeto JSON válido con esta estructura:
@@ -168,8 +240,8 @@ export class ChatService {
         // 2. Augmentation & Generation: Pasa los resultados al LLM para que razone sobre ellos.
         const movieContext = foundMovies.map(m => `ID: ${m.id}, Título: ${m.title}`).join('\n');
         
-        const chat = await this.groq.chat.completions.create({
-            model: 'meta-llama/llama-4-maverick-17b-128e-instruct', // llama3-70b-8192  o compound-beta
+        const { response: chat } = await this.runChatWithFallback({
+            preferredCandidates: ['llama-3.3-70b-versatile', 'llama-3.1-70b-instant', 'mixtral-8x7b'],
             messages: [
                 {
                     role: 'system',
@@ -238,8 +310,8 @@ export class ChatService {
     // El Agente Generalista para recomendaciones sin contexto.
     async handleGeneralRecommendation(message) {
 
-        const chat = await this.groq.chat.completions.create({
-            model: "meta-llama/llama-4-maverick-17b-128e-instruct", // llama3-70b-8192  o compound-beta
+        const { response: chat } = await this.runChatWithFallback({
+            preferredCandidates: ['llama-3.3-70b-versatile', 'llama-3.1-70b-instant', 'mixtral-8x7b'],
             messages: [
             { role: 'system', 
                 content: `
@@ -282,7 +354,7 @@ export class ChatService {
             response_format: { type: "json_object" },
         });
 
-        let result = JSON.parse(chat.choices[0].message.content);
+        let result;
         try {
             result = JSON.parse(chat.choices[0].message.content);
         } catch (error) {
