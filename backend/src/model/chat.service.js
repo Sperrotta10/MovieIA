@@ -24,6 +24,7 @@ export class ChatService {
 
     // Metodo para clasificar la intención del usuario.
     async getIntent(message) {
+        console.log("Modelos existentes:", await this.groq.models.list());
         const response = await this.groq.chat.completions.create({
             model: 'llama-3.3-70b-versátil', // compound-beta-mini o meta-llama/llama-prompt-guard-2-22m o -86m
             messages: [
